@@ -1,0 +1,12 @@
+/* --- 브랜드 컬러 시스템 (Deep Indigo & Aged Gold) --- */
+:root {
+    --color-deep-indigo: #302b6a; /* Primary Background / Authority Color */
+    --color-aged-gold: #c9a544;  /* Highlight / Key Information Color */
+    --color-void-black: #080714; /* Void Transition Base */
+    --color-text-light: #e6e6fa;
+}
+
+/* --- 시스템 오류/충돌 경고 색상 (Conflict Accent) --- */
+.glitch-warn {
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.7); /* 임시 대비 강조 효과 */
+}

@@ -1,0 +1,100 @@
+{
+  "document_id": "VTM-SPEC-MASTER-V2.0",
+  "version": "2.0.0 (Final Dev Handoff)",
+  "date": "2026-06-01",
+  "description": "MTP v2.0 기반, 모든 Void Transition Module(VTM)의 통합 기술 사양서. 개발자가 즉시 통합 테스트 케이스로 활용 가능하도록 JSON API 형식으로 정의됨.",
+  "global_constants": {
+    "palette": {
+      "deep_indigo": "#1A237E",
+      "aged_gold": "#FFC107",
+      "accent_error": "#CFD8DC",
+      "background_void": "rgba(10, 10, 10, 0.9)"
+    },
+    "timing": {
+      "standard_duration_ms": 1500,
+      "max_transition_speed_ms": 800,
+      "loop_frequency_hz": 4
+    }
+  },
+  "modules": [
+    {
+      "module_id": "VTM_LOGIC_FAILURE",
+      "name": "논리적 충돌 감지 모듈 (Conflict Point)",
+      "trigger_condition": "MTP_SECTION_END && 논리 구조 파괴 지점 도달",
+      "api_call": "/vtm/initiate/logic_failure",
+      "params": {
+        "severity": ["HIGH", "CRITICAL"],
+        "error_type": ["SEMANTIC_MISMATCH", "CAUSALITY_BREAK"],
+        "duration_ms": 2000,
+        "visual_effect": {
+          "overlay": "Grid Distortion & Glitch Scanlines",
+          "color_logic": "Deep Indigo (Base) -> Aged Gold (Error Highlight)",
+          "parameters": [
+            {"param": "distortion_amplitude", "value": "1.5x", "range": ["0.8x", "2.0x"]},
+            {"param": "scanline_frequency_hz", "value": 15, "range": [10, 30]},
+            {"param": "error_highlight_opacity", "value": "0.7"}
+          ]
+        }
+      },
+      "output_spec": {
+        "transition": "Hard Cut to System Error Visual",
+        "visual_asset_type": ["JSON/API Control"],
+        "developer_note": "이 모듈은 충돌 지점의 시간 코드(T-CODE)에 정확히 매핑되어야 하며, 노이즈와 글리치를 조합하여 시각적 정보 과부하를 유도해야 함."
+      }
+    },
+    {
+      "module_id": "VTM_KNOWLEDGE_GAP",
+      "name": "지식적 결핍 유도 모듈 (Knowledge Gap)",
+      "trigger_condition": "정보의 불완전성 제시 (Void Introduction)",
+      "api_call": "/vtm/initiate/knowledge_gap",
+      "params": {
+        "gap_magnitude": ["LOW", "MEDIUM", "HIGH"],
+        "duration_ms": 1800,
+        "visual_effect": {
+          "overlay": "Missing Data Placeholder (API Read Error)",
+          "color_logic": "Aged Gold (Question Mark) & Deep Indigo (Mystery)",
+          "parameters": [
+            {"param": "masking_pattern", "value": "Gaussian Blur + Noise Field", "range": ["Blur(2px)", "Noise(0.3)"]},
+            {"param": "placeholder_text_schema", "value": "[[DATA_MISSING]]", "size": "H2"},
+            {"param": "reveal_trigger_duration_ms", "value": 500}
+          ]
+        }
+      },
+      "output_spec": {
+        "transition": "Soft Dissolve into Query State",
+        "visual_asset_type": ["JSON/API Control"],
+        "developer_note": "시청자에게 '답을 찾아야 한다'는 지적 호기심(Curiosity)을 강제로 부여하는 것이 핵심."
+      }
+    },
+    {
+      "module_id": "VTM_ARCHIVAL_FLIP",
+      "name": "아카이브 자료 전환 모듈 (Temporal Shift)",
+      "trigger_condition": "시간적/개념적 배경 이동 시점 (Time Jump)",
+      "api_call": "/vtm/initiate/archive_flip",
+      "params": {
+        "era_shift": ["PAST", "FUTURE"],
+        "duration_ms": 1200,
+        "visual_effect": {
+          "overlay": "Film Grain & Temporal Distortion Overlay (Depth Field)",
+          "color_logic": "Monochromatic Shift (Sepia/Blue Tint) -> Full Color Transition",
+          "parameters": [
+            {"param": "grain_density", "value": "0.6", "unit": "ratio"},
+            {"param": "chromatic_aberration_strength", "value": "moderate"}
+          ]
+        }
+      },
+      "output_spec": {
+        "transition": "Physical Object Transition (Page Turn / Film Reel Rewind)",
+        "visual_asset_type": ["API + Motion Graphic"],
+        "developer_note": "학술적 권위를 시각적으로 극대화하며, 시간의 깊이감을 전달하는 데 중점을 둔다."
+      }
+    }
+  ],
+  "test_case_example": {
+    "scenario": "섹션 3 -> 섹션 4 (논리적 충돌 발생 지점)",
+    "expected_module": "VTM_LOGIC_FAILURE",
+    "input_state": "Stable, High Confidence Information Display",
+    "action": "개발자 테스트: VTM_LOGIC_FAILURE API 호출 및 매개변수 검증.",
+    "pass_criteria": "영상 내용과 관계없이, 2000ms 동안 Deep Indigo 배경 위에 Aged Gold의 글리치와 스캔라인이 구조적으로 오버레이되어야 하며, 세 가지 파라미터가 정의된 범위 내에서 작동해야 함."
+  }
+}

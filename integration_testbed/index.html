@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>📺 시스템 오류 통합 테스트베드 (v1.0)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: #e9ecef; padding: 20px; }
+        #testbed-container { max-width: 1000px; margin: auto; background: #2c3e50; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); padding: 30px; }
+        h1 { color: #f7d83b; text-align: center; border-bottom: 2px solid #34495e; padding-bottom: 10px; }
+        #timeline-display { min-height: 150px; background: #1c2833; border: 2px dashed #7f8c8d; padding: 20px; margin-top: 20px; position: relative; overflow: hidden; }
+        .scene-block { padding: 10px; margin-bottom: 15px; background: #34495e; border-left: 5px solid #ecf0f1; transition: all 0.5s ease; opacity: 0.7; }
+        .failure-active { animation: glitch 0.2s infinite alternate; background: linear-gradient(90deg, rgba(255,0,0,0.8) 0%, rgba(0,255,0,0.8) 50%, rgba(255,0,0,0.8) 100%); border-color: red !important; opacity: 1 !important;}
+        #status-log { margin-top: 20px; padding: 15px; background: #34495e; border-radius: 5px; }
+        .log-entry { color: #bdc3c7; font-size: 0.9em; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<div id="testbed-container">
+    <h1>🧪 시스템 오류 통합 테스트 환경 (E2E Simulation)</h1>
+    <p>현재 시뮬레이션 상태를 관찰하며, Writer의 스토리라인과 Designer의 Failure Module이 매끄럽게 결합되는지 검증합니다.</p>
+
+    <h2>🎬 시간 흐름 및 콘텐츠 출력</h2>
+    <div id="timeline-display">
+        <!-- Scene blocks will be inserted here -->
+    </div>
+
+    <h2>📊 시스템 로그 (Debugging Output)</h2>
+    <div id="status-log">
+        <div class="log-entry">[START] 테스트베드 로딩 완료. 초기 상태: 정상(System Green).</div>
+    </div>
+</div>
+
+<script src="./simulation_data.json"></script>
+<script src="./script.js"></script>
+
+<style>
+/* 애니메이션 정의 (Designer의 Failure Module 시각화 반영) */
+@keyframes glitch {
+    0% { transform: translate(1px, 1px); opacity: 1; }
+    20% { transform: translate(-2px, -2px); opacity: 0.95; filter: hue-rotate(0deg); }
+    40% { transform: translate(3px, 1px); opacity: 1; }
+    60% { transform: translate(-1px, -3px); opacity: 0.98; }
+    80% { transform: translate(2px, 2px); opacity: 1; filter: hue-rotate(180deg); }
+    100% { transform: translate(-3px, -1px); opacity: 1; }
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "component_id": "DSD-V2.0",
+  "name": "지식 흐름 데이터 스트림 디스플레이 (Cognitive Data Stream)",
+  "state_machine": {
+    "IDLE": "초기 상태. 배경의 미세한 노이즈/패턴만 표시.",
+    "TRIGGERED": "특정 지점(VTM_TRIGGER) 도달 시 활성화. 데이터 플로우가 폭발적으로 증가하며 빛나는 Cyan 라인이 전개됨.",
+    "DISPLAYING": "데이터 포인트($P_{data}$)가 시간 경과에 따라 점진적으로 나타나고 사라지며 논리 구조를 형성함."
+  },
+  "api_inputs": [
+    {"name": "P_flow_rate", "type": "Float (1-10)", "description": "데이터 전개 속도 제어"},
+    {"name": "P_data_density", "type": "Int (1-5)", "description": "화면에 표시되는 데이터 포인트의 밀집도"}
+  ],
+  "visual_rules": {
+    "background_pattern": "Deep Indigo 배경 위에 얇은 그리드 라인(Slate Gray)을 적용. 이 그리드가 미세하게 흔들리는(Jitter 효과 필수) 애니메이션 루프가 기본으로 작동해야 함.",
+    "element_style": "Cyan의 빛나는 선분(Line Segment). 시작과 끝에 Aged Gold의 반사광 처리를 추가하여 '발견'의 느낌을 부여."
+  }
+}

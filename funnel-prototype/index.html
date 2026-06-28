@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnel Prototype: Information Void Gateway</title>
+    <link rel="stylesheet" href="./funnel-prototype/styles.css">
+</head>
+<body>
+    <!-- 메인 컨텐츠 영역 (이곳에 Funnel의 내용이 재생된다고 가정) -->
+    <div id="main-content" class="container initial-state">
+        <h1>[영상 본론]: 당신은 지금 이 지식적 간극(Information Gap)을 목격하고 있습니다.</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 학술적 권위와 논리적 흐름이 최고조에 달한 순간입니다.</p>
+        <div id="trigger-point" style="height: 10px;"></div>
+    </div>
+
+    <!-- CTA Gate 위젯 (초기에는 숨겨져 있다가, VOID 상태에서 강제 노출) -->
+    <div id="cta-gateway" class="hidden">
+        <h2>[시스템 경고] 데이터 접근 불가</h2>
+        <p>⚠️ 다음 논리적 단계를 이해하기 위해서는 필수적인 '프레임워크' 정보가 누락되었습니다. 시스템 오류가 감지됩니다.</p>
+        <div class="error-message">ACCESS DENIED: Missing Logical Data Stream</div>
+        <button id="purchase-cta" onclick="simulatePurchase()">이 간극을 채우는 방법 알아보기 (구매)</button>
+    </div>
+
+    <!-- 스크립트 로드 -->
+    <script src="./funnel-prototype/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR_4001: 정보 결핍 게이트웨이 MVP</title>
+    <style>
+        /* --------------------- CSS Variables & Reset --------------------- */
+        :root {
+            --deep-indigo: #282c6e; /* 메인 배경/권위색 */
+            --aged-gold: #FFD700;   /* 강조/지식의 가치 */
+            --glitch-red: #ff3b30;  /* 오류/경고색 */
+            --text-light: #e9ecef;
+            --error-border: 2px solid var(--glitch-red);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117; /* 다크 모드 배경 */
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            background: rgba(35, 40, 75, 0.8); /* Deep Indigo Semi-transparent */
+            box-shadow: 0 0 30px rgba(40, 44, 110, 0.6);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: var(--aged-gold);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        /* --------------------- State A: Normal Content Flow --------------------- */
+        #content-zone {
+            min-height: 300px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: opacity 0.5s ease;
+        }
+
+        .content-module {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(30, 38, 60, 0.7);
+            border-left: 4px solid var(--aged-gold);
+        }
+
+        /* --------------------- State B: Error/Failure Gateway (ERROR_4001) --------------------- */
+        #error-gateway {
+            display: none; /* 초기에는 숨김 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px); /* Glitch 느낌 추가 */
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: glitch-fadein 0.5s ease-out;
+        }
+
+        @keyframes glitch-fadein {
+            from { opacity: 0; transform: scale(1.1); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .error-box {
+            width: 80%;
+            max-width: 700px;
+            padding: 40px;
+            background: linear-gradient(135deg, #2a0e0e, #5c0000); /* Deep Red Gradient */
+            border: var(--error-border);
+            box-shadow: 0 0 50px rgba(255, 59, 48, 0.5);
+        }
+
+        .error-code {
+            font-family: 'Courier New', monospace;
+            font-size: 3em;
+            color: var(--glitch-red);
+            margin-bottom: 15px;
+            animation: glitch-text 0.2s infinite alternate; /* Glitch 시뮬레이션 */
+        }
+
+        @keyframes glitch-text {
+            0% { transform: translate(-1px, -1px); opacity: 0.9; }
+            100% { transform: translate(1px, 1px); opacity: 1; }
+        }
+
+        /* CTA 버튼 스타일 (Funnel 유도) */
+        #cta-button {
+            background-color: var(--aged-gold);
+            color: #1a1a1a;
+            border: none;
+            padding: 15px 30px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #cta-button:hover {
+            background-color: #e0b500;
+            transform: scale(1.05);
+        }
+
+        /* Disabled State (게이트웨이 역할을 명확히 보여줌) */
+        .disabled-interaction * {
+            pointer-events: none !important; /* 모든 상호작용 비활성화 */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. 메인 콘텐츠 영역 (State A) -->
+    <div class="container" id="main-content">
+        <h1>[프로토타입] 지식의 간극: Funnel State Machine MVP</h1>
+        <p style="text-align: center; color: var(--aged-gold);">※ 이 프로토타입은 '정보 결핍'을 의도적으로 유발합니다.</p>
+
+        <div id="content-zone">
+            <!-- 초기 콘텐츠 모듈 -->
+            <div class="content-module">
+                <h2>[Step 1] 개념 정의: 정보의 불완전성</h2>
+                <p>우리가 일반적으로 '지식'이라고 생각하는 것들은 사실 부분적인 파편들입니다. 이 MVP는 그 파편들을 연결할 때 발생하는 논리적 간극을 보여줍니다.</p>
+            </div>
+
+            <!-- 핵심 모듈 (여기서 오류가 발생해야 함) -->
+            <div class="content-module" id="core-module">
+                <h2>[Step 2] 시스템 연동 테스트: 필수 로직 확인</h2>
+                <p>다음 단계로 넘어가기 위해서는 A와 B 변수 간의 *필수적인 상호작용 패턴*을 인지해야 합니다. <strong style="color: var(--glitch-red);">이 과정에 오류가 발생할 수 있습니다.</strong></p>
+            </div>
+
+            <button id="advance-btn" onclick="attemptAdvance()">다음 논리 단계 진행 (클릭)</button>
+        </div>
+    </div>
+
+    <!-- 2. 에러 게이트웨이 영역 (State B) -->
+    <div id="error-gateway">
+        <div class="error-box">
+            <div class="error-code">ERROR_4001</div>
+            <h2>[SYSTEM FAILURE] 데이터 무결성 위반 감지</h2>
+            <p>핵심 로직을 처리하는 과정에서, 필수 전제 조건(Precondition)이 충족되지 않아 시스템에 오류가 발생했습니다.</p>
+            <p style="color: var(--aged-gold); font-weight: bold;">진단 결과: 사용자의 지식 구조 내부에 '정보 결핍 (Information Gap)' 상태가 확인되었습니다.</p>
+            <p>이 문제를 해결하고 다음 단계로 진행하려면, 현재 시스템이 요구하는 추가적인 맥락(Context)을 습득해야 합니다. 이 정보는 일반 공개 자료에 존재하지 않습니다.</p>
+
+            <!-- 강제 CTA -->
+            <button id="cta-button" onclick="handlePurchase()">지식 결핍 해소 패키지 구매하기 (FUNNEL 진입)</button>
+        </div>
+    </div>
+
+
+    <script>
+        const mainContent = document.getElementById('main-content');
+        const contentZone = document.getElementById('content-zone');
+        const errorGateway = document.getElementById('error-gateway');
+
+        // ---------------------- State Management Functions ----------------------
+
+        /**
+         * Step 1: 정상 상태에서 오류 게이트웨이로의 전환을 시뮬레이션합니다.
+         */
+        function attemptAdvance() {
+            console.log("Attempting to advance logic...");
+
+            // 1. 콘텐츠 비활성화 및 트랜지션 효과 적용
+            mainContent.classList.add('disabled-interaction');
+            contentZone.style.opacity = '0';
+
+            setTimeout(() => {
+                // 2. 정상 화면을 완전히 제거하고 오류 게이트웨이를 강제로 활성화
+                document.getElementById('main-content').style.display = 'none';
+                errorGateway.style.display = 'flex'; // Flexbox로 중앙 정렬
+                window.scrollTo(0, 0); // 스크롤 위치 초기화
+
+            }, 500); // CSS 트랜지션 시간과 맞춤
+        }
+
+        /**
+         * Step 2: Funnel 전환 로직 (구매 버튼 클릭 시)
+         */
+        function handlePurchase() {
+            alert("✅ [SUCCESS] 유료 콘텐츠 진입 성공. API 호출 및 결제 프로세스 시작. (Funnel Tracking Parameter 전송됨)");
+            // 실제 구현에서는 여기에 Stripe/PayPal 연동 코드와 Funnel Tracking 로직이 들어갑니다.
+            // window.location.href = 'paid-content-landing?source=mvp_error';
+        }
+
+        // 초기화: 페이지가 로드되면 콘텐츠를 보여주고, 다음 동작을 기다립니다.
+    </script>
+
+</body>
+</html>

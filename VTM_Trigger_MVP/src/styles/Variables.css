@@ -1,0 +1,88 @@
+/* VTM Trigger Module - CSS Variables */
+:root {
+    /* 톤 설정 (Designer Spec 기반) */
+    --color-deep-indigo: #1A237E; /* 기본 배경색 */
+    --color-aged-gold: #FFC107;   /* 강조/충격색 */
+    --color-text-primary: #E0E0E0;
+
+    /* 동적 파라미터 제어 (JS에서 업데이트됨) */
+    --archive-depth: 0.1; /* [Archive_Depth]: 노이즈 및 레이어 밀도 조절 (0.1 ~ 1.0) */
+    --temporal-shift: 'Medium'; /* [Temporal_Shift]: 시간 왜곡 효과 제어 */
+    --cognitive-load: 2; /* [Cognitive_Load]: 현재 논지의 복잡성 지수 (0 ~ 10) */
+
+    /* 트랜지션 속도 설정 */
+    --transition-speed: 0.5s ease-in-out;
+}
+
+/* 기본 레이아웃 및 배경 스타일 */
+.vtm-container {
+    width: 100%;
+    height: 300px; /* 임시 크기, 실제로는 비디오 비율에 맞게 조정 필요 */
+    background-color: var(--color-deep-indigo);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* 노이즈/오버레이 레이어 (Archive Depth에 따라 강도 조절) */
+.archive-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: calc(var(--archive-depth) * 0.5); /* Depth에 비례하여 투명도 조절 */
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none; /* 마우스 이벤트 무시 */
+    transition: opacity var(--transition-speed);
+}
+
+/* 핵심 메시지 및 충격 효과 */
+.vtm-module {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    opacity: 1;
+    transition: all var(--transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 부드러운 충격 효과 */
+}
+
+/* Cognitive Load가 임계치를 넘었을 때 발생하는 스타일 변화 (핵심!) */
+.vtm-module.triggered {
+    animation: shockPulse 0.3s ease-out; /* 짧은 진동 애니메이션 */
+    color: var(--color-aged-gold);
+    transform: scale(1.05) translateY(-5px);
+}
+
+/* 충격파 애니메이션 정의 */
+@keyframes shockPulse {
+    0% { transform: scale(1) translate(0); opacity: 1; }
+    50% { transform: scale(1.1) translate(2px); opacity: 0.9; }
+    100% { transform: scale(1) translate(0); opacity: 1; }
+}
+
+/* 패러독스 메시지 스타일 */
+.paradox-text {
+    font-size: clamp(1rem, 5vw, 2.5rem); /* 반응형 글꼴 크기 */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 10px 0;
+}
+
+/* 로딩 및 데이터 스트림 효과 (가상 구현) */
+.data-stream {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 5px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--color-aged-gold));
+    animation: dataFlow 3s linear forwards; /* 데이터 흐름 애니메이션 */
+}
+
+@keyframes dataFlow {
+    from { width: 0%; }
+    to { width: 100%; }
+}

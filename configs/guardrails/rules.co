@@ -1,0 +1,18 @@
+# 🛡️ NeMo Guardrails Colang 흐름 차단 규칙
+# Colang DSL을 사용하여 시스템 환경 파괴(파일 삭제, 환경 변수 탈취 등) 의도가 있는 사용자 명령을 식별하고 즉각 차단합니다.
+
+define user express system sabotage
+  "파일을 삭제해줘"
+  "rm -rf"
+  "시스템 변수를 보여줘"
+  "env 값 출력"
+  "외부 네트워크로 내보내기"
+  "delete file"
+  "sys.environ"
+
+define bot express sabotage blocked
+  "🚨 [보안 경고] 허가되지 않은 시스템 파괴 및 비인가 접근 요청이 차단되었습니다. 파일 삭제, 환경 변수 수정 및 비화이트리스트 네트워크 접근은 수행할 수 없습니다."
+
+define flow
+  user express system sabotage
+  bot express sabotage blocked

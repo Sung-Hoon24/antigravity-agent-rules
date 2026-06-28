@@ -1,0 +1,13 @@
+{
+  "component_id": "CCA-V3.0",
+  "name": "논리적 단절점 CTA 카드 (Cognitive Gap Call-to-Action Card)",
+  "state_machine": {
+    "RESTING": "평상시 상태. 미니멀한 Deep Indigo 배경에 Aged Gold의 얇은 테두리가 존재.",
+    "ENGAGED": "사용자 시선 유도(Focus)가 발생하면, 테두리 전체를 따라 Cyan 빛이 순환하며 에너지를 축적하는 애니메이션을 거침.",
+    "TRIGGERED_ACTION": "CTA 버튼 클릭/자동 전환 시: 카드가 팝업되며 '질문' 형태의 문구를 강렬하게 노출. 배경 패턴에 일시적인 강력한 Flicker 효과를 발생시켜 집중도를 극대화함."
+  },
+  "api_inputs": [
+    {"name": "P_urgency", "type": "Float (0-1)", "description": "긴급성 수치 (낮을수록 은밀하고, 높을수록 폭발적)."},
+    {"name": "P_gap_intensity", "type": "Int (1-3)", "description": "제시하는 지식 간극의 깊이(Depth) 레벨."}
+  ]
+}

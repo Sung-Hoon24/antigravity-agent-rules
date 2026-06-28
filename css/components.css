@@ -1,0 +1,127 @@
+/* 1. Header & Nav */
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+/* 2. Hero Section */
+.hero-section {
+    padding: 100px 0;
+    text-align: center;
+}
+.cta-primary {
+    background-color: var(--color-secondary);
+    color: white;
+    font-size: 1.1em;
+    margin-top: 30px;
+}
+
+/* 3. Gap Analysis Grid (지식 간극 시각화) */
+.gap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+.gap-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+.gap-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+/* 4. Solution Features */
+.feature-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-top: 50px;
+    text-align: center;
+}
+.feature-card {
+    flex: 1; /* Flexbox를 사용해 균등 분배 */
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+}
+
+/* 5. CTA Gate Mockup (핵심 인터랙티브 영역) */
+.mockup-cta-gate {
+    text-align: center;
+    padding: 60px;
+    margin: 80px auto;
+    border-top: 3px dashed var(--color-secondary);
+}
+.gap-warning {
+    font-size: 1.5em;
+    color: #e74c3c; /* 경고 색상 */
+    margin-bottom: 20px;
+}
+/* CTA Secondary (Gate) - 지식적 간극 유도용 */
+.cta-secondary {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* 6. Pricing Section (구매 Funnel 최종 진입) */
+.pricing-section {
+    padding: 80px 0;
+    text-align: center;
+}
+.price-box {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: 40px auto;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+/* CTA Final (구매 버튼) */
+.cta-final {
+    background-color: #e74c3c; /* 구매를 위한 강력한 액션 색상 */
+    color: white;
+    font-size: 1.4em;
+    padding: 20px 50px;
+    margin-top: 30px;
+}
+
+/* Responsiveness (모바일 환경 고려) */
+@media (max-width: 768px) {
+    .header-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .feature-grid, .gap-grid {
+        grid-template-columns: 1fr; /* 모바일에서는 한 줄로 */
+    }
+    .cta-final {
+        width: 90%;
+    }
+}

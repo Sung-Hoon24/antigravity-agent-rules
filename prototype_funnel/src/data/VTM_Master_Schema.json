@@ -1,0 +1,70 @@
+{
+  "schema_version": "2.0",
+  "description": "Void Transition Module (VTM) Master Specification: Defines all visual and temporal parameters for state-to-state transitions based on Cognitive Gap occurrence.",
+  "color_palette": {
+    "primary": "#1A237E",
+    "secondary": "#FFC107",
+    "void_bg": "rgba(26, 35, 126, 0.9)",
+    "highlight": "#FBC02D"
+  },
+  "global_params": {
+    "duration_min": 0.8,
+    "duration_max": 1.5,
+    "easing_curve": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "camera_effect": "Depth Distortion / Focal Shift"
+  },
+  "transitions": [
+    {
+      "transition_id": "T1_DISRUPTION",
+      "trigger_condition": "Knowledge Gap Trigger (논리적 충돌 발생 지점)",
+      "source_state": ["Information_BuildUp", "Hook_Initial"],
+      "target_state": "Cognitive_Gap_Trigger",
+      "duration_range": [1.0, 1.5],
+      "animation_params": {
+        "visual_effect": "Chromatic Aberration + Glitch Warp",
+        "opacity_change": "Current Content Opacity -> 0.1 (Fade)",
+        "color_shift": "Deep Indigo(Primary) $\\to$ Near Black/Void BG",
+        "keyframe_sequence": [
+          {"t_start": 0.0, "effect": "Intense Luminosity Flash", "params": {"intensity": 1.5, "duration": 0.1}},
+          {"t_start": 0.1, "effect": "Chromatic Aberration Layering", "params": {"offset_x": [1.2, -1.2], "shift_y": [-1.0, 1.0]}},
+          {"t_start": 0.3, "effect": "Geometric Distortion/Warp", "params": {"grid_scale": 0.8, "warp_strength": 0.7, "axis": "XY"}},
+          {"t_end": 1.5, "effect": "Sudden Cut to Void BG", "params": {"fade_out_duration": 0.2}}
+        ]
+      }
+    },
+    {
+      "transition_id": "T2_REVELATION",
+      "trigger_condition": "Resolution/Master Insight (지식적 결핍 해소 및 권위 제시)",
+      "source_state": ["Cognitive_Gap_Trigger"],
+      "target_state": "Resolution_Insight",
+      "duration_range": [0.8, 1.2],
+      "animation_params": {
+        "visual_effect": "Emergent/Layering Reveal (Aged Gold 강조)",
+        "opacity_change": "Void BG Opacity -> 1.0 (Gradual Fade)",
+        "color_shift": "Near Black/Void BG $\\to$ Deep Indigo with Aged Gold Overlay",
+        "keyframe_sequence": [
+          {"t_start": 0.0, "effect": "Subtle Pulsing Light Emission", "params": {"source": "Aged Gold", "frequency": 1.5}},
+          {"t_start": 0.2, "effect": "Layered Text/Data Reveal (Typewriter effect)", "params": {"speed": "Medium", "color": "Aged Gold"}},
+          {"t_start": 0.6, "effect": "Depth Stabilization", "params": {"focus_depth": "Mid-ground objects", "gradual_stabilization": true}}
+        ]
+      }
+    },
+    {
+      "transition_id": "T3_TRANSITION_FOCUS",
+      "trigger_condition": "Segment Break/Time Skip (다음 논점 이동)",
+      "source_state": ["Any State"],
+      "target_state": ["Any State"],
+      "duration_range": [0.5, 0.8],
+      "animation_params": {
+        "visual_effect": "Hard Wipe or Gaussian Blur Transition",
+        "opacity_change": "1.0 $\\to$ 0.0 (Fast Fade)",
+        "color_shift": "Neutral/Minimal Shift (Deep Indigo 잔상 유지)",
+        "keyframe_sequence": [
+          {"t_start": 0.0, "effect": "Gaussian Blur Apply", "params": {"radius": 8, "duration": 0.2}},
+          {"t_start": 0.15, "effect": "Hard Wipe (Vertical/Horizontal)", "params": {"direction": "Upward", "speed": 1.5}},
+          {"t_end": 0.8, "effect": "Stabilization and Fade-in", "params": {"fade_duration": 0.2}}
+        ]
+      }
+    }
+  ]
+}

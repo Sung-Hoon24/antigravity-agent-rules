@@ -1,0 +1,30 @@
+{
+  "primary": {
+    "name": "Deep Indigo (Primary)",
+    "hex": "#282A43",
+    "rgb": [40, 42, 67],
+    "role": "Background / Text Base Color",
+    "api_usage": "StateTransition.background_fill"
+  },
+  "secondary": {
+    "name": "Aged Gold (Accent)",
+    "hex": "#C9A85B",
+    "rgb": [201, 168, 91],
+    "role": "Highlight / Focus Element / CTA Border",
+    "api_usage": "Component.focus_glow(P_intensity)"
+  },
+  "neutral_dark": {
+    "name": "Slate Gray (Tertiary)",
+    "hex": "#4D5370",
+    "rgb": [77, 83, 112],
+    "role": "Sub-text / Separator Lines",
+    "api_usage": "Layout.divider(P_thickness)"
+  },
+  "highlight_reveal": {
+    "name": "Bright Cyan (Transient)",
+    "hex": "#6AFFFF",
+    "rgb": [106, 255, 255],
+    "role": "Data Stream / Technical Signal (Jitter Effect Source)",
+    "api_usage": "Effect.signal_burst(P_amplitude)"
+  }
+}

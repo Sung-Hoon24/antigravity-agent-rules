@@ -1,0 +1,57 @@
+/* Global Reset & Variables */
+:root {
+    --color-primary: #30234d; /* Deep Indigo - 전문성을 위한 핵심 색상 */
+    --color-secondary: #c9a15f; /* Aged Gold - 권위, 강조 요소 */
+    --color-text: #333;
+    --color-bg-light: #f7f7fa;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Pretendard', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 가독성 높은 폰트 사용 */
+    line-height: 1.6;
+    color: var(--color-text);
+    scroll-behavior: smooth; /* 부드러운 스크롤 구현 (UX 개선) */
+}
+
+/* Layout Utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.bg-light {
+    background-color: var(--color-bg-light);
+    padding: 80px 0;
+}
+
+/* Typography */
+h1, h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.subhead {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* Components (CTA, Grid) */
+.cta-primary, .cta-secondary, .cta-final {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+    border: none; /* 버튼 요소에 일관성 부여 */
+}
+
+/* ... (CSS 상세 스타일은 components.css로 분리하여 모듈성을 높임) ... */

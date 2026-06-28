@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>VTM Trigger System E2E Simulator Mockup</title>
+    <style>
+        body { font-family: 'Roboto Mono', monospace; background-color: #1a1e24; color: #d3deee; padding: 20px; }
+        .container { max-width: 900px; margin: auto; border: 1px solid #3c4558; padding: 20px; background: #22262e; }
+        h1 { color: #FFD700; border-bottom: 2px solid #3c4558; padding-bottom: 10px; }
+        #visualArea { height: 300px; background-color: #2C3E50; position: relative; overflow: hidden; border: 2px dashed #FFD700; margin-bottom: 20px; transition: background-color 0.1s linear; }
+        #visualArea::before { content: 'DATA STREAM'; position: absolute; top: 50%; left: -100%; width: 300%; height: 100%; transform: translateY(-50%); animation: dataScroll 8s infinite linear; opacity: 0.7; color: rgba(255, 255, 255, 0.1); }
+        @keyframes dataScroll { from { transform: translate(-100%, -50%) scale(1); opacity: 0.7; } to { transform: translate(100%, -50%) scale(1); opacity: 0.7; } }
+        #paramDisplay p { margin: 5px 0; font-size: 0.9em; }
+        button { padding: 10px 20px; background-color: #3c4558; color: white; border: none; cursor: pointer; margin-right: 10px; transition: background-color 0.2s; }
+        button:hover { background-color: #4a5670; }
+        #status { margin-top: 20px; padding: 15px; border: 1px solid #FFD700; background-color: rgba(255, 215, 0, 0.05); color: #FFD700;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>VTM Trigger System E2E Simulator</h1>
+    <p>현재 시스템 상태 및 파라미터 변화를 시뮬레이션합니다. (Asset Bible V2.0 기반)</p>
+
+    <!-- VISUAL AREA: Jitter/Color Shift가 적용될 영역 -->
+    <div id="visualArea"></div>
+
+    <h3>📈 Current State Parameters</h3>
+    <div id="paramDisplay">
+        <p>State: <span id="stateDisplay" style="color: #FFD700;">Loading...</span></p>
+        <p>Time Elapsed: <span id="timeDisplay">0.0s</span></p>
+        <p>Jitter Magnitude (P_j): <span id="jitterDisplay">N/A</span></p>
+        <p>Data Noise Level (P_n): <span id="noiseDisplay">N/A</span></p>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button onclick="stepSimulator(1)">Step Forward (+1s)</button>
+        <button onclick="resetSimulator()">Reset Simulation</button>
+    </div>
+
+    <div id="status">Simulation Ready. Press 'Step Forward' to start the state progression.</div>
+</div>
+
+<script src="../src/VTM_SimulatorEngine.js"></script> <!-- JS 번들로 가정 -->
+<script>
+    // 로컬에서 실행하기 위해 엔진 인스턴스를 전역으로 설정합니다.
+    const engine = new VTM_SimulatorEngine();
+    let simulationInterval;
+
+    function updateMockup(state) {
+        document.getElementById('stateDisplay').innerText = state.state;
+        document.getElementById('timeDisplay').innerText = `${state.timeElapsed.toFixed(1)}s`;
+        document.getElementById('jitterDisplay').innerText = `${state.params.jitterMagnitude.toFixed(3)}`;
+        document.getElementById('noiseDisplay').innerText = `${state.params.dataNoiseLevel.toFixed(3)}`;
+
+        // 1. 배경색 변화 (Color Shift 적용)
+        const visualArea = document.getElementById('visualArea');
+        visualArea.style.backgroundColor = state.params.colorShiftHex;
+
+        // 2. Jitter/Flicker 시뮬레이션 (CSS 변수나 직접 스타일 조작으로 구현 가능)
+        if (state.params.jitterMagnitude > 0.4) {
+            // 불안정할수록 배경에 깜빡임 효과를 강하게 적용합니다.
+            visualArea.style.boxShadow = `0 0 ${Math.max(1, state.params.jitterMagnitude * 50)}px rgba(255, 0, 0, ${state.params.jitterMagnitude * 0.8}) inset`;
+        } else {
+            visualArea.style.boxShadow = 'none';
+        }
+
+        // 3. 상태 메시지 업데이트
+        const statusDiv = document.getElementById('status');
+        if (state.state === 'COLLAPSE_GATE') {
+             statusDiv.innerHTML = `🔥 CRITICAL FAILURE: ${state.params.dataNoiseLevel.toFixed(2)} 데이터 불안정성 감지! Paywall Gate 활성화 필요.`;
+             statusDiv.style.borderColor = '#B83F49'; // Danger Color
+        } else if (state.state === 'POST_TRIGGER') {
+            statusDiv.innerHTML = `✅ SUCCESS: 콘텐츠가 안정화되었습니다. CTA(Call to Action)를 통해 유료 Funnel로 전환을 시도하세요.`;
+            statusDiv.style.borderColor = '#2ecc71'; // Success Green
+        } else {
+             statusDiv.innerHTML = `⚙️ Running smoothly in ${state.state} state. Ready for the next logical step.`;
+             statusDiv.style.borderColor = '#FFD700';
+        }
+    }
+
+    function stepSimulator(timeDelta) {
+        // Engine의 핵심 로직을 호출하여 새 상태를 얻습니다.
+        const newState = engine.advanceState(timeDelta);
+        updateMockup(newState);
+    }
+
+    function resetSimulator() {
+        clearInterval(simulationInterval);
+        engine.transitionTo('NORMAL'); // 엔진 초기화 (내부 로직이 재설정됨)
+        // UI 업데이트를 위한 강제 호출 필요
+        const initialState = engine.getCurrentState();
+        updateMockup(initialState);
+    }
+
+</script>
+</body>
+</html>

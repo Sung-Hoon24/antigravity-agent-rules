@@ -1,0 +1,70 @@
+{
+  "blueprint_id": "MTB-V3.0",
+  "version": "3.0.0 (Integration Complete)",
+  "target_system": "MTP v2.0 Rendering Pipeline",
+  "description": "모든 논리적 충돌 지점(Conflict Point)과 지식 단절점(Cognitive Gap)을 기반으로 VTM API 호출이 강제되는 통합 마스터 타임라인 사양서.",
+  "global_directives": {
+    "pre_check": ["All video segments must pass LVT (Logical Validation Test).", "Conflict Point handling is mandatory. No seamless transitions allowed at critical junctures."],
+    "default_vtm": {
+      "module_id": "VTM_STANDARD_TRANSITION",
+      "api_call": "/vtm/transition/standard",
+      "params": {"duration_ms": 800, "severity": "LOW"}
+    }
+  },
+  "timeline_sections": [
+    {
+      "section_id": "S1_OPENING_HOOK",
+      "time_code": { "start": "00:00:00", "end": "00:00:30" },
+      "narrative_focus": "강한 전제 제시 및 지식적 결핍 유도 (Hook)",
+      "logic_state": "NORMAL_BUILDUP",
+      "vtm_call": {
+        "api_call": "/vtm/transition/standard",
+        "params": {"duration_ms": 1000, "severity": "NONE"}
+      },
+      "visual_spec": "미니멀하고 빠르며(Fast-paced), 호기심을 자극하는 정보 제시. 오류 효과 사용 금지."
+    },
+    {
+      "section_id": "S2_CONCEPTUAL_MISMATCH",
+      "time_code": { "start": "00:00:31", "end": "00:01:45" },
+      "narrative_focus": "기존 지식 A와 제시된 개념 B의 충돌 시작.",
+      "logic_state": "CONFLICT_POINT_START",
+      "vtm_call": {
+        "api_call": "/vtm/initiate/logic_failure",
+        "params": {
+          "severity": "MEDIUM",
+          "error_type": "SEMANTIC_MISMATCH",
+          "duration_ms": 1500,
+          "visual_effect": {"overlay": "Subtle Grid Distortion", "color_logic": "Deep Indigo"}
+        }
+      },
+      "visual_spec": "시각적 불안정성(Visual Instability)을 도입. 사운드 디자인으로도 불협화음 강조."
+    },
+    {
+      "section_id": "S3_CRITICAL_BREAKPOINT",
+      "time_code": { "start": "00:01:46", "end": "00:02:35" },
+      "narrative_focus": "논리적 파괴가 극대화되는 핵심 지점. 시청자의 질문 폭발.",
+      "logic_state": "CRITICAL_BREAKPOINT",
+      "vtm_call": {
+        "api_call": "/vtm/initiate/logic_failure",
+        "params": {
+          "severity": ["HIGH", "CRITICAL"],
+          "error_type": ["CAUSALITY_BREAK", "CONCEPTUAL_COLLAPSE"],
+          "duration_ms": 2000,
+          "visual_effect": {"overlay": "Grid Distortion & Glitch Scanlines (Full Spectrum)", "color_logic": "Deep Indigo -> Aged Gold"}
+        }
+      },
+      "visual_spec": "가장 강렬한 시각적/청각적 오류 효과. 텍스트 오버레이는 과부하(Overload) 상태를 표현해야 함."
+    },
+    {
+      "section_id": "S4_OPENING_LOOP_CTA",
+      "time_code": { "start": "00:02:36", "end": "00:02:59" },
+      "narrative_focus": "해답 제시 대신, 다음 콘텐츠로의 흐름(Open Loop) 유도.",
+      "logic_state": "OPEN_LOOP_GATEWAY",
+      "vtm_call": {
+        "api_call": "/vtm/initiate/soft_fadeout",
+        "params": {"duration_ms": 1500, "severity": "NONE"}
+      },
+      "visual_spec": "강한 궁금증을 남기는 여운(Suspense). 다음 단계로의 전환이 부드럽지만 미스터리해야 함. (CTA: 플레이리스트 링크)."
+    }
+  ]
+}

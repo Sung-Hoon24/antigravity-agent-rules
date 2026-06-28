@@ -1,0 +1,31 @@
+{
+  "video_title": "당신이 '빨갛다'고 느끼는 감각. 물리 법칙은 설명할 수 없다? (Qualia의 역설)",
+  "duration_estimate": "15:00",
+  "workflow_schema_version": "v2.0-FINAL",
+  "sections": [
+    {
+      "sequence_id": "HOOK_INITIAL_CONFLICT",
+      "time_range": {"t_start_sec": 0, "t_end_sec": 1:30},
+      "narrative_focus": "확증 편향과 데이터의 함정 (객관적 증거가 왜곡되는 과정)",
+      "visual_spec": "Deep Indigo & Aged Gold. 빠르고 복잡한 그래프/논리 회로도 오버레이. 오류 메시지(Glitch) 적극 활용.",
+      "audio_spec": "빠른 비트의 불안정한 Ambient Noise. 정보 과부하를 유발하는 사운드 레이어링.",
+      "cta_strategy": "Mini CTA (댓글): '당신의 신념을 무너뜨린 사례' 댓글 유도."
+    },
+    {
+      "sequence_id": "DEVELOPMENT_QUALIA_GAP",
+      "time_range": {"t_start_sec": 1:30, "t_end_sec": 4:00},
+      "narrative_focus": "물리 법칙 vs. 주관적 경험(Qualia). 데이터가 설명하지 못하는 '느낌'의 존재론적 문제 제기.",
+      "visual_spec": "fMRI 스캔 이미지 모션 그래픽을 사용하되, 연결이 끊긴 'Void Zone'을 과장하여 표현 (핵심 시각 충격 지점).",
+      "audio_spec": "급작스러운 사운드 드롭아웃(Sound Drop-out)과 낮은 톤의 내레이션으로 긴장감 증폭.",
+      "cta_strategy": "Mid CTA: '우리가 다뤄온 것은 단지 일부입니다. 이 역설은 더 깊습니다...' (정보 부족 공백 유발)."
+    },
+    {
+      "sequence_id": "PEAK_TENSION_THE_QUESTION",
+      "time_range": {"t_start_sec": 4:00, "t_end_sec": 6:30},
+      "narrative_focus": "근본적인 '존재'의 경계 (시간, 의식, 인식). 아무도 답하지 못한 가장 추상적인 공백 유발.",
+      "visual_spec": "미니멀하지만 웅장한 아카이브 영상. 화면 움직임 최소화. Deep Indigo & Aged Gold가 적절히 분배된 타이포그래피 강조.",
+      "audio_spec": "음악의 갑작스러운 정지 (Silence) 및 깊은 사색을 유도하는 극도의 Quiet Time 연출. 배경에 저주파(Sub-bass)만 남김.",
+      "cta_strategy": "🥇 MAIN CTA (핵심): '당신의 삶의 가장 큰 의문점은 무엇인가요?' 인터랙티브 배너 노출 및 지적 공백 자산화 유도."
+    }
+  ]
+}

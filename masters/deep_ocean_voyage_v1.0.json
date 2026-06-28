@@ -1,0 +1,103 @@
+[
+  {
+    "sequence_id": "OCEAN_INTRO",
+    "time_range": {
+      "t_start_sec": 0.0,
+      "t_end_sec": 30.0
+    },
+    "narrative_segment": {
+      "script_source": "[00:00 - 00:30]",
+      "core_argument": "고요한 심해로의 초대 및 호흡 정돈 유도"
+    },
+    "transition_module": {
+      "module_id": "Visual_Fade_In",
+      "api_spec": {
+        "params": ["fade_duration=3.0", "aspect_ratio=9:16"],
+        "state_change": "INTRO_TO_BREATH"
+      },
+      "audio_spec": {
+        "bgm_id": "deep_ocean_432hz_intro",
+        "emotional_arc": "Calmness"
+      }
+    },
+    "cta_logic": [
+      "자막: 눈을 감고 심해의 소리에 집중하세요"
+    ]
+  },
+  {
+    "sequence_id": "BREATH_GUIDE",
+    "time_range": {
+      "t_start_sec": 30.0,
+      "t_end_sec": 90.0
+    },
+    "narrative_segment": {
+      "script_source": "[00:30 - 01:30]",
+      "core_argument": "4초 흡기, 4초 호기 리듬의 호흡 가이드 수행"
+    },
+    "transition_module": {
+      "module_id": "Breath_Sync_Looper",
+      "api_spec": {
+        "params": ["breath_interval=4.0", "scale=1.1"],
+        "state_change": "BREATH_TO_VOYAGE"
+      },
+      "audio_spec": {
+        "bgm_id": "breath_pulse_432hz",
+        "emotional_arc": "Deep_Relaxation"
+      }
+    },
+    "cta_logic": [
+      "자막: 4초간 숨을 들이마시고, 4초간 천천히 내쉬세요"
+    ]
+  },
+  {
+    "sequence_id": "MIDNIGHT_VOYAGE",
+    "time_range": {
+      "t_start_sec": 90.0,
+      "t_end_sec": 150.0
+    },
+    "narrative_segment": {
+      "script_source": "[01:30 - 02:30]",
+      "core_argument": "심해 200m 고요 속 불안의 완전한 소멸 연출"
+    },
+    "transition_module": {
+      "module_id": "Deep_Ocean_Void",
+      "api_spec": {
+        "params": ["light_intensity=0.2", "particle_density=low"],
+        "state_change": "VOYAGE_TO_OUTRO"
+      },
+      "audio_spec": {
+        "bgm_id": "midnight_harbor_ambient",
+        "emotional_arc": "Tranquility"
+      }
+    },
+    "cta_logic": [
+      "자막: 오늘 밤, 모든 불안을 이 깊은 바다에 묻어두세요"
+    ]
+  },
+  {
+    "sequence_id": "OUTRO_HEALING",
+    "time_range": {
+      "t_start_sec": 150.0,
+      "t_end_sec": 180.0
+    },
+    "narrative_segment": {
+      "script_source": "[02:30 - 03:00]",
+      "core_argument": "치유의 다짐 및 채널 고관여 상호작용 유도"
+    },
+    "transition_module": {
+      "module_id": "Visual_Fade_Out",
+      "api_spec": {
+        "params": ["fade_duration=5.0", "black_hold=2.0"],
+        "state_change": "END_STATE"
+      },
+      "audio_spec": {
+        "bgm_id": "healing_fade_out",
+        "emotional_arc": "Peaceful_End"
+      }
+    },
+    "cta_logic": [
+      "자막: 더 깊은 치유가 필요하다면, 구독과 댓글로 평온을 나눠주세요",
+      "End Screen: Aura Serenity Wellness Channel Link"
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+# 🛡️ 루비아 1차 보안 방어선: Git pre-commit 훅 설정 파일
+# 커밋 시점에 코드 내 빈칸 오류, 기본 문법 규칙 위반 및 API 키 유출을 자동 검사합니다.
+
+repos:
+  # 1. 기본 파일 위생 및 문법 검증 (trailing-whitespace, end-of-file, yaml 검증 등)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  # 2. 파이썬 코드 정적 분석 및 포맷팅 강제 (Ruff & Black)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.280
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+
+  # 3. 하드코딩된 클라우드/API 비밀 키 탐지 (Gitleaks)
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks

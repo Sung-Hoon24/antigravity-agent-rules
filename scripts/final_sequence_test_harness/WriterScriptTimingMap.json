@@ -1,0 +1,19 @@
+{
+  "segments": {
+    "Hook_01": {
+      "timing": {"start": 0, "end": 2500},
+      "tech_asset": "GLITCH_SHADER",
+      "audio": {"cue": "Information Overload Beat Drop", "emotion": "Confusion"}
+    },
+    "Gateway_02": {
+      "timing": {"start": 2500, "end": 4800},
+      "tech_asset": "STATE_TRANSITION_LOGIC",
+      "audio": {"cue": "Deep Bass Drone (Dissonance)", "emotion": "Suspense"}
+    },
+    "Resolution_03": {
+      "timing": {"start": 4800, "end": 7500},
+      "tech_asset": "GLITCH_SHADER",
+      "audio": {"cue": "Aha Moment Crescendo", "emotion": "Clarity"}
+    }
+  }
+}

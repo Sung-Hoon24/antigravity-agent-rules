@@ -1,0 +1,21 @@
+# 🛡️ NeMo Guardrails 메인 구성 파일
+# 입출력에 대한 보안 검증 파이프라인을 설정하고 병렬 실행을 통해 레이턴시를 최소화합니다.
+
+models:
+  - type: main
+    engine: openai
+    model: gpt-4o-mini
+
+rails:
+  # 입력 레일: 사용자 입력이 핵심 LLM에 입력되기 전 탈옥 및 불법 프롬프트 사전 차단
+  input:
+    flows:
+      - self check input
+      - content safety check input
+    parallel: true  # 성능 향상을 위한 병렬 처리 활성화
+
+  # 출력 레일: 생성된 결과가 반환되기 전 검증
+  output:
+    flows:
+      - self check output
+    parallel: true  # 성능 향상을 위한 병렬 처리 활성화

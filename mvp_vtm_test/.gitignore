@@ -1,0 +1,7 @@
+# Build artifacts and dependencies
+/node_modules
+*.log
+dist/
+
+# Environment variables and secrets
+.env

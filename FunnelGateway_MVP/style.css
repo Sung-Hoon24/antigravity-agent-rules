@@ -1,0 +1,90 @@
+/* CSS는 시각적 구조와 애니메이션 타이밍을 정의합니다 */
+:root {
+    --deep-indigo: #1A0F3D;
+    --aged-gold: #C8B26E;
+    --error-red: #FF5733;
+    --transition-speed: 0.6s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a081c; /* Deep background */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 40px 20px;
+    background: #120e30;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Phase Styling --- */
+.content-section {
+    padding: 40px 20px;
+    min-height: 400px;
+    border-bottom: 1px solid rgba(200, 178, 110, 0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Gateway Specific Styling (Designer's Input) --- */
+#gateway-display {
+    background: linear-gradient(90deg, #330a4d, #1a0f3d, #330a4d);
+    padding: 50px;
+    margin: 20px auto;
+    border: 3px solid var(--error-red);
+    box-shadow: 0 0 20px rgba(255, 87, 51, 0.5);
+    animation: glitch-pulse 1s infinite alternate; /* Glitch 효과 시뮬레이션 */
+}
+
+@keyframes glitch-pulse {
+    from { transform: translate(-2px, -2px) scale(1.0); opacity: 0.9; }
+    to { transform: translate(2px, 2px) scale(1.05); opacity: 1; }
+}
+
+.glitch-text {
+    color: var(--error-red);
+    font-size: 1.8em;
+    letter-spacing: 5px;
+    animation: glitch-flicker 0.1s infinite alternate;
+}
+@keyframes glitch-flicker {
+    from { transform: translate(-2px, 2px); opacity: 0.8; }
+    to { transform: translate(2px, -2px); opacity: 1; }
+}
+
+/* --- CTA Button --- */
+#cta-button {
+    background-color: var(--aged-gold);
+    color: #1a0f3d;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#cta-button:hover {
+    background-color: #e8d99a;
+    transform: scale(1.05);
+}
+
+/* Status Bar */
+#status-bar {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #0c0a2b;
+    font-size: 0.9em;
+}

@@ -1,0 +1,57 @@
+/* Deep Indigo Base Colors */
+:root {
+    --deep-indigo: #1D2A50;
+    --aged-gold: #B89F6A;
+    --danger-red: #C53737;
+}
+
+.funnel-gate-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #1D2A50; /* Deep Indigo Background */
+    color: white;
+    border-radius: 10px;
+}
+
+.loader {
+    font-size: 1.2em;
+    padding: 20px;
+    text-align: center;
+}
+
+/* ✨ Glitch Effect Simulation (Deep Indigo/Danger Red) */
+.glitch-container.active {
+    border: 3px solid var(--danger-red);
+    box-shadow: 0 0 15px rgba(197, 55, 55, 0.5), inset 0 0 10px rgba(197, 55, 55, 0.3);
+    padding: 20px;
+    background-color: #2a1e28; /* 오류 강조를 위해 더 어둡게 */
+}
+
+.text-danger {
+    color: var(--danger-red);
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* CTA 버튼 스타일링 (Aged Gold 활용) */
+.cta-btn {
+    background-color: var(--aged-gold);
+    color: #1D2A50; /* Deep Indigo 텍스트 */
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1.1em;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.cta-btn:hover {
+    background-color: #D4C59A; /* Aged Gold 밝은 버전 */
+    transform: translateY(-2px);
+}
+
+/* 초기 상태와 성공 상태의 대비를 위한 클래스 */
+.text-success {
+    color: #8dd3c7;
+}

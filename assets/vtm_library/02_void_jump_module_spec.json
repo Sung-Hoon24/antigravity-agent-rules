@@ -1,0 +1,16 @@
+{
+  "module_id": "VTM-VOIDJUMP",
+  "function": "지식적 단절, 논리적 비약(Cognitive Gap) 발생 시각화",
+  "trigger_condition": ["Paradigm Shift", "Irreconcilable Conflict"],
+  "color_palette_usage": {
+    "void_transition_bg": "Deep Indigo (Near Black)",
+    "flash_highlight": "Aged Gold (Rapid Pulse)",
+    "text_fragmentation": "White/Indigo Gradient"
+  },
+  "parameters": {
+    "jump_duration_sec": {"type": "float", "min": 0.3, "max": 1.2, "default": 0.8},
+    "void_intensity": {"type": "float", "min": 0.5, "max": 1.0, "default": 0.9}, // 블랙홀 같은 깊이감 제어
+    "fragmentation_count": {"type": "int", "min": 3, "max": 12, "default": 7} // 분산되는 정보 파편의 개수
+  },
+  "developer_notes": "화면 전체를 순식간에 압축하는 '사건 발생' 같은 느낌을 주어야 하며, 사운드와 연동 필수."
+}

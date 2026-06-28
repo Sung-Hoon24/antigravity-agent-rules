@@ -1,0 +1,30 @@
+{
+  "font_family": "Inter / EB Garamond (Fallback: Noto Sans)",
+  "hierarchy": {
+    "H1_Title": {
+      "weight": "Bold",
+      "size_base": "72px",
+      "responsive_scaling": "linear(vw * 0.8)",
+      "color_api": "Aged Gold (Accent)"
+    },
+    "H2_Section": {
+      "weight": "Semi-Bold",
+      "size_base": "48px",
+      "responsive_scaling": "linear(vw * 0.6)",
+      "color_api": "Deep Indigo (Primary)"
+    },
+    "Body_Text": {
+      "weight": "Regular",
+      "size_base": "24px",
+      "responsive_scaling": "viewport_units(1rem)",
+      "line_height": 1.6,
+      "color_api": "Slate Gray (Tertiary)"
+    },
+    "Technical_Code": {
+      "weight": "Mono",
+      "size_base": "18px",
+      "background_color_api": "Deep Indigo (Primary) @ 0.7 opacity"
+    }
+  },
+  "layout_principle": "Rule of Thirds 및 Golden Ratio(φ ≈ 1.618)를 기반으로 주요 정보 배치."
+}

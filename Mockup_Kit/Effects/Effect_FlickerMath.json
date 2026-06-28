@@ -1,0 +1,1 @@
+{"effect": "Flicker", "description": "광도(Luminosity)의 급격한 변화.", "params": {"P_period": "1 / f (Hz)", "P_depth": "L_{min} + L_{max} * sin(2\pi f t)", "P_randomness": "0.1 * rand()"}, "implementation_note": "Flicker는 비주얼 노이즈 발생 시, 강제적으로 켜고 꺼지는 타이밍에 활용."}

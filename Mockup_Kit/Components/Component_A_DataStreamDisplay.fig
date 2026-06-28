@@ -1,0 +1,1 @@
+{"effect": "Jitter", "description": "좌표계의 무작위 노이즈 변동 효과.", "params": {"P_amplitude": "A * cos(t) + B * sin(t)", "P_frequency": "f0 + 2*rand(-1, 1)", "P_decay": "e^(-k*t)"}, "implementation_note": "Jitter는 모든 컴포넌트의 바운딩 박스에 적용되어야 함."}

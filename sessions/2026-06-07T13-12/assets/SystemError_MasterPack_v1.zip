@@ -1,0 +1,21 @@
+**[README.md]**
+    # ⚙️ Funnel Gateway Master Pack v1.0 - Asset Specification Sheet
+    ## 목표: 시청자의 논리적 결핍(Deficiency) 유발 및 강제 전환 (Funneling)
+    ### 💡 핵심 컨셉: 정보의 단절과 과부하를 통한 불안감 극대화
+
+    ---
+    **[Asset List]**
+    1. **The Deficiency Jump:** A-POINT 트리거 모듈 (T+0ms ~ T+250ms)
+        *   *활용:* 콘텐츠가 클라이맥스에 도달했을 때, 모든 확신을 깨뜨리는 순간.
+        *   *색상:* Deep Indigo $\to$ Glitch Cyan $\to$ Overexposed Deep Indigo (CTA).
+    2. **The Overload Cascade:** Funnel Gateway 모듈 (T+0ms ~ T+400ms)
+        *   *활용:* 결핍 발생 후, 해결책을 제시하는 CTA 직전의 3초 구간.
+        *   *색상:* Glitch Cyan/Deep Indigo 무작위 파편 $\to$ 단일 수렴점 (CTA).
+    3. **Chrono-Defect Loop:** 배경 루프 모듈 (반복 사용 가능)
+        *   *활용:* 전체 영상의 도입부, 정보 전달 구간 전반.
+        *   *색상:* Deep Indigo 기반 + Glitch Cyan 미세 떨림.
+
+    ---
+    **[Implementation Guidelines]**
+    *   **타이밍:** 모든 자산은 **T+XXXms 기준 타이밍 제어(Keyframing)**가 필수입니다. 단순 오버레이로 사용하지 마십시오.
+    *   **개발 환경:** After Effects (혹은 유사 모션 그래픽 툴)의 컴포지션 단위로 분리하여 제공받아야 개발자가 쉽게 재조합 및 테스트 가능합니다.

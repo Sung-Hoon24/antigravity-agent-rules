@@ -1,0 +1,30 @@
+{
+  "Asset_Name": "FunnelGateway_SystemicDeficiency",
+  "Version": "1.0 - Shader Based",
+  "Target_Time_Window": {
+    "Start_Time": "T+320ms",
+    "End_Time": "T+510ms",
+    "Duration": "190ms"
+  },
+  "Implementation_Method": "WebGL Fragment Shader (Shader API)",
+  "Key_Parameters": {
+    "u_intensity": {
+      "Description": "오류의 시각적 강도. 0.0(비활성화)에서 1.0(최대 오류) 사이로 변화.",
+      "Timeline_Curve": [
+        {"Time_ms": 320, "Value": 0.8},
+        {"Time_ms": 400, "Value": 1.0},
+        {"Time_ms": 500, "Value": 0.9},
+        {"Time_ms": 510, "Value": 0.2} // 다음 장면에 부드럽게 전환되도록 강도 급감 (Critical)
+      ]
+    },
+    "Noise_Scale": {
+      "Description": "Perlin Noise의 공간적/시간적 스케일. 데이터가 '흘러가는' 느낌을 부여.",
+      "Value": "Dynamic (Time-based)"
+    }
+  },
+  "Technical_Directives": [
+    "Shader는 반드시 `u_time` 변수를 사용하여 시간 의존성을 구현해야 함.",
+    "T+510ms 시점의 Shader 출력 값은 다음 콘텐츠 섹션의 배경색(예: #1a1a2e)과 색상 채널이 자연스럽게 겹치도록 점진적인 감쇠 효과(Fade-out)를 포함할 것.",
+    "성공적으로 구현되면, 이 모듈은 '시스템적 결핍'을 시간 기반으로 증명하는 핵심 에셋이 됨."
+  ]
+}

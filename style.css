@@ -1,0 +1,176 @@
+/* Designer Web Spec 준수 */
+
+:root {
+    --primary-color: #9B59B6; /* 딥 인디고 - 신뢰, 전문성 */
+    --secondary-color: #34495e; /* 다크 그레이 - 무게감, 본문 */
+    --accent-color: #F39C12; /* 엠버 골드 - 통찰, 강조 */
+    --bg-light: #F5F7FA; /* 미묘한 그레이 배경 */
+    --text-dark: #2c3e50;
+}
+
+/* Global Reset & Typography */
+body {
+    font-family: 'Pretendard', sans-serif; /* 가독성 최우선 폰트 설정 (가정) */
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: #FFFFFF;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    box-sizing: border-box;
+}
+
+/* Section Styling */
+.section-bg {
+    background-color: var(--bg-light);
+    padding: 60px 20px;
+}
+
+#hero, #solution, #data-funnel {
+    text-align: center;
+}
+
+/* Typography Enhancements */
+h1 {
+    font-family: 'Noto Serif KR', serif; /* 권위 있는 세리프체 사용 */
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+h3 {
+    margin-top: 40px;
+    font-size: 2rem;
+}
+
+/* Buttons (CTA) */
+.cta-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+}
+
+/* Accent Hover Effect (Designer Spec 준수) */
+.cta-button:hover {
+    background-color: #7b46a3; /* Primary보다 어두운 호버 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.6);
+}
+
+/* Large CTA Button for Hero */
+.large-btn {
+    padding: 20px 60px;
+    font-size: 1.3rem;
+    margin-top: 30px;
+}
+
+
+/* Gap Section Styling (경고/강조) */
+.warning-box {
+    background-color: #fef7e9; /* 은은한 경고 배경 */
+    border-left: 5px solid var(--accent-color);
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.warning-box strong {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+/* Purchase Section Styling */
+.purchase-section {
+    background-color: #ffffff; /* 순백색으로 집중도 높임 */
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.payment-form {
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: var(--bg-light);
+}
+
+.payment-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Data Form Styling */
+.data-form label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.data-form input[type="text"],
+.data-form input[type="email"],
+.data-form textarea {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1rem;
+    resize: vertical; /* textarea 크기 조절 허용 */
+}
+
+.form-submit {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Utility */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.feature-list li {
+    background: #e6f2ff; /* 연한 배경 */
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    color: #ccc;
+    font-size: 0.9rem;
+}

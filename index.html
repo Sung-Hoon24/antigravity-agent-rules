@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Gap Prototype - 코다리 개발 버전</title>
+    <!-- Designer님이 정의한 모든 토큰과 애니메이션이 포함된 CSS 로드 -->
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="hero-section">
+        <h1>당신이 알고 있는 지식이 틀릴 수 있습니다.</h1>
+        <p>지식적 결핍을 경험하는 인터랙티브 프로토타입입니다.</p>
+    </header>
+
+    <!-- 💡 데이터가 동적으로 삽입될 메인 섹션 -->
+    <section id="knowledge-gap-container" class="content-wrapper">
+        <h2>🚨 논리적 충돌 지점 (Knowledge Gap)</h2>
+        <!-- 여기에 JavaScript로 Article Component들이 생성됩니다. -->
+    </section>
+
+    <!-- 💡 CTA 위젯이 동적으로 활성화될 영역 -->
+    <section id="cta-trigger-area" class="cta-wrapper">
+        <h3>당신의 상태는 어떤가요?</h3>
+        <div id="dynamic-cta-widget" class="cta-widget default-state">
+            <p>더 깊은 이해를 원하시나요?</p>
+            <!-- 초기에는 비활성화된 텍스트만 보입니다. -->
+            <button class="cta-button disabled" disabled>진단 시작 (비활성)</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; Knowledge Gap Prototype by Code-Ari & Team</p>
+    </footer>
+
+    <!-- 핵심 로직이 들어가는 JS 파일 -->
+    <script src="js/main.js"></script>
+</body>
+</html>

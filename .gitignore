@@ -1,0 +1,14 @@
+# 환경 변수 및 민감 정보 차단
+.env
+token_*.json
+client_secret_*.json
+*token*.json
+validation_receipt.json
+outputs/
+output/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

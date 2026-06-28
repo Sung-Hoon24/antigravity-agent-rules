@@ -1,0 +1,118 @@
+/* =============================================================== */
+/* 🎨 CSS Variables & Base Styles (Designer Spec adherence) */
+/* =============================================================== */
+:root {
+    --color-bg-deep: #0A0D1F; /* Deep Indigo - Primary Background */
+    --color-gold-acc: #B8934A; /* Aged Gold - Accent/CTA */
+    --color-error-warn: #FF5722; /* Warning Amber - Error State */
+    --color-text-base: #EAEAEA; /* Light Text */
+}
+
+body {
+    background-color: var(--color-bg-deep);
+    color: var(--color-text-base);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 40px;
+    text-align: center;
+    transition: all 1s ease-in-out; /* State Transition Smoothness */
+}
+
+/* =============================================================== */
+/* 🚧 Glitch Animation Module (CORE Component) */
+/* =============================================================== */
+.glitch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 13, 31, 0.95); /* Deep Indigo semi-transparent */
+    pointer-events: none; /* 마우스 이벤트를 통과시킴 (배경으로 보이게) */
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 100; /* 가장 위에 표시되어야 함 */
+}
+
+.glitch-overlay.active {
+    opacity: 1;
+}
+
+/* Glitch 효과를 주는 요소 (텍스트나 특정 박스에 적용) */
+@keyframes glitch {
+    0% { transform: translate(0); opacity: 1; }
+    20% { transform: translate(-3px, -2px); opacity: 0.8; }
+    40% { transform: translate(5px, 3px); opacity: 0.9; }
+    60% { transform: translate(-2px, 1px); opacity: 0.7; }
+    80% { transform: translate(3px, -1px); opacity: 1; }
+    100% { transform: translate(0); opacity: 1; }
+}
+
+.glitch-text {
+    font-size: 3em;
+    color: var(--color-error-warn);
+    text-shadow:
+        2px 0 #ff5722, -2px 0 #FFCDD2; /* 경고 색상 그림자 */
+    animation: glitch 0.1s linear infinite alternate;
+}
+
+/* =============================================================== */
+/* ✨ CTA Gate Widget Styles */
+/* =============================================================== */
+#cta-gateway {
+    text-align: center;
+    padding: 60px 20px;
+    border: 3px solid var(--color-gold-acc);
+    background-color: rgba(15, 20, 40, 0.8); /* 약간 더 밝은 배경 */
+    box-shadow: 0 0 30px rgba(184, 147, 74, 0.3);
+    transition: opacity 1s;
+}
+
+#cta-gateway h2 {
+    color: var(--color-gold-acc);
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+/* 시스템 오류 박스 */
+.error-message {
+    background-color: rgba(255, 87, 34, 0.15); /* Error Red/Amber 배경 */
+    border: 2px dashed var(--color-error-warn);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 60%;
+    font-size: 1.3em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* CTA 버튼 */
+#purchase-cta {
+    background-color: var(--color-gold-acc);
+    color: var(--color-bg-deep); /* 골드 배경에 어두운 글씨로 대비 효과 */
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#purchase-cta:hover {
+    background-color: #D4B87C; /* Hover 시 약간 밝은 골드 */
+    transform: translateY(-2px);
+}
+
+/* 유틸리티 클래스 */
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,51 @@
+{
+  "moduleName": "VoidTransitionModule",
+  "version": "2.0.1_Beta",
+  "apiEndpoints": {
+    "trigger": "/transition/initiate",
+    "paramsRequired": ["type", "intensity", "duration"]
+  },
+  "supportedTransitions": [
+    {
+      "id": "VTM_INITIAL_QUESTION",
+      "description": "경미한 의심 유발 및 주의 분산. (Hook)",
+      "inputSchema": {
+        "Intensity": {"type": "float", "min": 0.1, "max": 1.0},
+        "Focus": {"type": "string", "enum": ["SelfQuery", "ExternalDoubt"]}
+      }
+    },
+    {
+      "id": "VTM_AUTHORITY_LOCKIN",
+      "description": "학술적 안정감 부여. (Part 1)",
+      "inputSchema": {
+        "ColorPalette": {"type": "string", "enum": ["DeepIndigo/AgedGold"]},
+        "Rate": {"type": "string", "enum": ["Linear", "Exponential"]}
+      }
+    },
+    {
+      "id": "VTM_DECOHERENCE_EVENT",
+      "description": "과학적 논리 붕괴 발생. (충돌 I)",
+      "inputSchema": {
+        "ParadoxLevel": {"type": "string", "enum": ["Medium", "High"]},
+        "Source": {"type": "string", "enum": ["NeuralSignal", "PhysicsLaw"]}
+      }
+    },
+    {
+      "id": "VTM_UNCERTAINTY_FIELD",
+      "description": "예측 불가능성 시각화. (충돌 II)",
+      "inputSchema": {
+        "ProbabilityField": {"type": "string", "enum": ["Overlap", "Diffusion"]},
+        "ColorShift": {"type": "string"}
+      }
+    },
+     {
+      "id": "VTM_OPEN_LOOP",
+      "description": "시청자에게 다음 탐색을 유도하는 질문형 엔딩. (CTA)",
+      "inputSchema": {
+        "Focus": {"type": "string", "enum": ["QuestionMark", "SolutionPath"]},
+        "NextTopic": {"type": "string"}
+      }
+    }
+  ],
+  "status": "Ready for Backend Integration Testing"
+}

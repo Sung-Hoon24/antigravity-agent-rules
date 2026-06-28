@@ -1,0 +1,11 @@
+{
+  "title": "Cognitive Gap Simulation Data",
+  "durationSec": 360,
+  "segments": [
+    {"timeStart": 0, "timeEnd": 45, "state": "Hook_Initial", "content": "정보 제시: 배경 지식 A"},
+    {"timeStart": 45, "timeEnd": 120, "state": "Information_BuildUp", "content": "논리 전개: 증거 B와 C 통합"},
+    {"timeStart": 120, "timeEnd": 180, "state": "Knowledge_Gap_Trigger", "conflictType": "Void Transition", "paramsId": "VTM-001", "content": "논리적 충돌 발생! (지식의 결함)"},
+    {"timeStart": 180, "timeEnd": 240, "state": "Mini_Archive_Reveal", "conflictType": null, "paramsId": null, "content": "미공개 아카이브 제시"},
+    {"timeStart": 240, "timeEnd": 360, "state": "Resolution_CTA", "action": "PaidGate_Click", "paramsId": "VTM-END"}
+  ]
+}

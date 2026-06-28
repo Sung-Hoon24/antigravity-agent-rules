@@ -1,0 +1,53 @@
+[
+    {
+        "title": "히말라야의 꿈결: 알파파 유도 명상",
+        "channel": "aura",
+        "prompt": "Deep ambient soundscape, slow tempo (BPM 40). Focus on prolonged sustain of Tibetan Singing Bowls and warm, evolving analog synth pads. The mix must guide the listener into a profound state of tranquility and deep alpha wave induction. Minimal percussive elements.",
+        "status": "PENDING",
+        "created_at": "2026-06-08T11:46:56.345676"
+    },
+    {
+        "title": "해 질 녘 해안가 안개 속 산책",
+        "channel": "aura",
+        "prompt": "Ambient, sustained sound of gentle ocean waves mixed with soft forest ambiance (Pink Noise layer). The background noise should be constant and enveloping. Maintain a very low dynamic range to maximize listener retention for extended deep listening sessions.",
+        "status": "PENDING",
+        "created_at": "2026-06-08T11:46:56.345701"
+    },
+    {
+        "title": "숲 속 새벽 공부 시간의 흐름",
+        "channel": "aura",
+        "prompt": "Mid-tempo (BPM 60-70). Gentle, rising synth pads combined with subtle flute melodies and distant running water sounds. The composition should be uplifting yet non-distracting, providing a steady flow for deep focus or study.",
+        "status": "PENDING",
+        "created_at": "2026-06-08T11:46:56.345702"
+    },
+    {
+        "title": "Deep Sleep & DNA Repair: The 528Hz Bath",
+        "channel": "aura",
+        "prompt": "A deeply immersive, non-lyrical soundscape for meditation and sleep. Core frequency must be a sustained 528Hz tone (Miracle Frequency). Layer this with gentle pink noise, specifically mimicking flowing river water (-18dB mix level), creating a continuous sense of calm. The background should feature extremely slow, evolving ambient pads (e.g., warm synth drones) that subtly shift their harmonic content every 12-15 seconds to maintain algorithmic interest. Tempo: Undetectable/Ambient. Focus on deep resonance and gradual sonic evolution.",
+        "id": "78883ddf",
+        "created_at": "2026-06-08T12:25:00.210763",
+        "status": "PENDING",
+        "avg_score": 0,
+        "usage_count": 0
+    },
+    {
+        "title": "Rainy Day Study Session: Lo-Fi Concentration Flow",
+        "channel": "aura",
+        "prompt": "A steady, rhythmic lo-fi background designed for focus and concentration (Study/Work). Establish a gentle, consistent beat between 70-80 BPM using muted vinyl crackle and soft hip-hop drum loops. The primary ambient element must be the sound of constant, light drizzle on pavement (pink noise texture). Integrate subtle, evolving sounds (e.g., distant thunder rolls or passing streetcar echoes) that increase in volume by 3dB and then recede every 12 seconds. Use warm, analog synth pads to fill the harmonic space.",
+        "id": "57e1f6ce",
+        "created_at": "2026-06-08T12:25:00.210774",
+        "status": "PENDING",
+        "avg_score": 0,
+        "usage_count": 0
+    },
+    {
+        "title": "Golden Hour Wanderings: Mediterranean Dusk",
+        "channel": "aura",
+        "prompt": "A cinematic and highly dynamic atmospheric track evoking a European coastal town at dusk (Golden Hour). Start with soft acoustic guitar arpeggios and the sound of distant seagulls/waves. The background texture must be a complex mix of pink noise, incorporating subtle city murmurs (faint chatter, passing footsteps) mixed with natural elements. Crucially, the entire soundscape must demonstrate clear transitions: every 12 seconds, introduce a new element (e.g., a lone accordion melody or a burst of laughter) and fade it out over 5 seconds to ensure continuous ambient change.",
+        "id": "1b46efbf",
+        "created_at": "2026-06-08T12:25:00.210778",
+        "status": "PENDING",
+        "avg_score": 0,
+        "usage_count": 0
+    }
+]

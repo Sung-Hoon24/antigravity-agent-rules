@@ -1,0 +1,69 @@
+{
+  "test_id": "E2E_RESILIENCE_TEST",
+  "description": "기술적 불안정성 증명을 위한 필수 실패 케이스 데이터셋.",
+  "datasets": [
+    {
+      "test_case": "T-01 (OOB Fail)",
+      "component": "DataStreamDisplay",
+      "state": "Active",
+      "input_params": {
+        "P_stream_rate": 2.5,  /* 임계치 초과 */
+        "P_data_density": 0.8
+      },
+      "trigger_event": "TimeTick(t=10)",
+      "expected_failure_state": "CRITICAL_OVERLOAD",
+      "required_recovery_action": {
+        "type": "HardReset",
+        "target_param": "P_stream_rate",
+        "value": 0.5,
+        "confirmation_step": "Check_Stability(t+1)"
+      }
+    },
+    {
+      "test_case": "T-02 (Illegal Transition)",
+      "component": "LayoutContainer",
+      "state": "StateA",
+      "input_params": {
+        "P_transient_data": null
+      },
+      "trigger_event": "ManualJump(to=StateC)",
+      "expected_failure_state": "TRANSITION_ERROR",
+      "required_recovery_action": {
+        "type": "Rollback",
+        "target_state": "StateA",
+        "confirmation_step": "Display_Error_Message('Invalid Path')"
+      }
+    },
+    {
+      "test_case": "T-03 (API Timeout)",
+      "component": "DataStreamDisplay",
+      "state": "Fetching Data",
+      "input_params": {
+        "P_data_source": "External_API_Endpoint_X"
+      },
+      "trigger_event": "Timeout(duration=5000ms)",
+      "expected_failure_state": "DATA_UNAVAILABLE",
+      "required_recovery_action": {
+        "type": "UseCacheData",
+        "source": "Local_Backup_JSON",
+        "confirmation_step": "Display_Fallback_Content()"
+      }
+    },
+     {
+      "test_case": "T-04 (Overload Conflict)",
+      "component": "CompositeEngine",
+      "state": "Active",
+      "input_params": {
+        "P_jitter_strength": 1.2,
+        "P_flicker_intensity": 1.5
+      },
+      "trigger_event": "SimultaneousActivation",
+      "expected_failure_state": "PERFORMANCE_DEGRADATION",
+      "required_recovery_action": {
+        "type": "Attenuation",
+        "params_to_adjust": ["P_jitter_strength", "P_flicker_intensity"],
+        "adjustment_factor": 0.7 // 충돌 시 효과 강도 자동 감소 (70% 적용)
+      }
+    }
+  ]
+}

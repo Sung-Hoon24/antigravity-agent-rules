@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진단 워크북 구매 게이트웨이 (Prototype)</title>
+    <style>
+        /* 🎨 2. 컬러 및 타이포그래피 사양 적용 */
+        :root {
+            --deep-indigo: #1A0B3C;
+            --aged-gold: #D4AF37;
+            --neon-cyan: #00FFFF;
+            --off-white: #EAEAEA;
+            --error-red: #ff4d4d;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #0a061c; /* 배경을 좀 더 깊은 인디고로 설정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            padding: 20px;
+        }
+
+        /* --- 메인 컴포넌트 컨테이너 --- */
+        #purchase-widget {
+            background-color: var(--deep-indigo);
+            border: 1px solid rgba(212, 175, 55, 0.3); /* Aged Gold 테두리 */
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+
+        h3 {
+            color: var(--neon-cyan);
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3); /* Glitch 느낌의 언더라인 */
+            padding-bottom: 10px;
+        }
+
+        p {
+            color: var(--off-white);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: var(--aged-gold);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"], input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #3a256d;
+            background-color: #14082c;
+            color: var(--off-white);
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--neon-cyan); /* 포커스 시 Glitch 하이라이트 */
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+
+        /* --- 핵심 버튼 (Failed State & CTA) --- */
+        #purchaseButton {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            /* 기본 스타일: 시스템 경고 메시지처럼 보이게 */
+            background-color: var(--aged-gold);
+            color: var(--deep-indigo);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden; /* 글리치 효과를 위해 */
+        }
+
+        /* Hover 및 Active 상태 변화 (미세한 불안정성 부여) */
+        #purchaseButton:hover {
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transform: translateY(-2px);
+            background-color: #e4c930; /* 호버 시 골드 강조 */
+        }
+
+        /* Glitch 효과 (CSS Pseudo-elements를 이용한 간접 구현) */
+        #purchaseButton::before, #purchaseButton::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--deep-indigo);
+            mix-blend-mode: overlay; /* 겹치는 색상 효과 */
+            opacity: 0.3;
+        }
+
+        #purchaseButton::before {
+            transform: translate(2px, -1px);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        #purchaseButton::after {
+            transform: translate(-2px, 1px);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+
+        /* --- 상태 메시지 스타일링 (결과 피드백) --- */
+        #statusMessage {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            min-height: 30px; /* 공간 확보 */
+        }
+
+        .success {
+            background-color: rgba(76, 209, 120, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .failure {
+            background-color: rgba(255, 77, 77, 0.2);
+            border: 1px solid var(--error-red);
+            color: var(--error-red);
+        }
+
+        /* --- 애니메이션 키프레임 (Glitch Effect) --- */
+        @keyframes glitch-anim {
+            0% { clip-path: inset(10% 0 80% 0); transform: translate(2px, -1px); }
+            30% { clip-path: inset(65% 0 20% 0); transform: translate(-2px, 1px); }
+            60% { clip-path: inset(80% 0 10% 0); transform: translate(2px, -1px); }
+            100% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 1px); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="purchase-widget">
+    <h3>[SYSTEM ALERT] 필수 지식 결핍 감지 (ERROR_4001)</h3>
+    <p>이 콘텐츠의 핵심 개념을 완전히 이해하려면, 체계적인 '진단 워크북'이 필요합니다. 이 위젯은 당신의 학술적 상태(Academic Status)를 진단하고 다음 단계로 안내하는 게이트웨이입니다.</p>
+
+    <div class="form-group">
+        <label for="userEmail">🎓 이메일 주소 (진단 결과 전송용):</label>
+        <input type="email" id="userEmail" placeholder="example@university.edu" required>
+    </div>
+    <div class="form-group">
+        <label for="userName">👤 이름:</label>
+        <input type="text" id="userName" placeholder="홍길동" required>
+    </div>
+
+    <!-- data-text 속성은 CSS ::before, ::after 효과를 위해 사용 -->
+    <button id="purchaseButton" data-text="진단 워크북 구매 및 Funnel 진입">
+        [필수] 워크북 게이트웨이 활성화 (₩19,000)
+    </button>
+
+    <!-- 상태 메시지 출력 영역 -->
+    <div id="statusMessage"></div>
+</div>
+
+
+<script>
+    // 🛠️ 자바스크립트 로직: 결제 및 트래킹 시뮬레이션
+    const purchaseButton = document.getElementById('purchaseButton');
+    const statusMessage = document.getElementById('statusMessage');
+
+    /**
+     * @description API 호출을 시뮬레이션합니다. (네트워크 지연 시간 포함)
+     * @param {object} data - 전송할 사용자 데이터 및 트래킹 파라미터
+     * @returns {Promise<boolean>} 성공 여부를 반환하는 Promise
+     */
+    function simulateApiCall(data) {
+        console.log("⚙️ API 호출 시작: Funnel Gateway로 데이터 전송 시뮬레이션...");
+
+        // 1. 로딩 상태 UI 업데이트
+        purchaseButton.disabled = true;
+        purchaseButton.textContent = '✅ 처리 중... 데이터를 검증합니다.';
+        statusMessage.innerHTML = '';
+        statusMessage.className = '';
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                // 2. 시뮬레이션 로직: 간단한 조건에 따라 성공/실패를 결정 (예: 이메일 형식 검증 실패 시 failure 유도)
+                const isSuccess = data.email && data.email.includes('@') && !data.email.endsWith('fail');
+
+                if (isSuccess) {
+                    // 3. 성공 처리 (가상 결제 및 트래킹 발동)
+                    resolve(true);
+                } else {
+                    // 4. 실패 처리 (결제 게이트웨어 오류 시뮬레이션)
+                    console.error("❌ API Failure: 가상의 결제/트래킹 에러 발생.");
+                    resolve(false);
+                }
+            }, 1500); // 1.5초 지연 시간 (네트워크 Latency 모방)
+        });
+    }
+
+    /**
+     * @description 트래킹 데이터를 외부 분석 시스템으로 전송하는 함수를 시뮬레이션합니다.
+     * 실제 환경에서는 Google Analytics, Amplitude 또는 자체 서버 엔드포인트로 AJAX 요청을 보냅니다.
+     * @param {object} data - 수집된 모든 사용자/트랜잭션 데이터
+     */
+    function trackConversion(data) {
+        console.log("📈 [Tracking]: Funnel State Machine 전환 성공 감지 및 트래킹 API 호출.");
+        // TODO: 실제 환경에서는 fetch('/api/track_funnel', { method: 'POST', body: JSON.stringify(data) })를 사용해야 합니다.
+        alert(`[API Log] 데이터 전송 완료:\n- Funnel State: Error_4001\n- User ID: ${data.email}\n- Action: Purchase Attempt`);
+    }
+
+
+    /**
+     * @description 버튼 클릭 이벤트 핸들러 (핵심 로직)
+     */
+    purchaseButton.addEventListener('click', async () => {
+        const email = document.getElementById('userEmail').value;
+        const name = document.getElementById('userName').value;
+
+        if (!email || !name) {
+            statusMessage.className = 'failure';
+            statusMessage.innerHTML = '⚠️ 모든 필드를 채워주셔야 Funnel 게이트웨이가 활성화됩니다.';
+            return;
+        }
+
+        // 1. 데이터 수집 (현재 상태)
+        const userData = {
+            email: email,
+            name: name,
+            timestamp: new Date().toISOString(),
+            widgetVersion: 'v1.0_DeepIndigo', // 버전 관리를 통한 디버깅 필수
+            funnelStage: 'Error_4001_Attempt'
+        };
+
+        // 2. API 호출 시뮬레이션 및 결과 처리
+        const success = await simulateApiCall(userData);
+
+        if (success) {
+            // 성공 로직 실행
+            statusMessage.className = 'success';
+            statusMessage.innerHTML = `✅ 전송 완료! ${name}님, 당신의 진단 워크북이 발급되었습니다.<br>다음 단계로 이동합니다.`;
+            purchaseButton.textContent = '🎉 구매 성공! 다음 콘텐츠로 이동 (Click Me)';
+            purchaseButton.style.backgroundColor = '#4CAF50'; // 녹색으로 변경
+            // 핵심: 트래킹 로직 실행
+            trackConversion(userData);
+
+        } else {
+            // 실패 로직 실행
+            statusMessage.className = 'failure';
+            statusMessage.innerHTML = `❌ 오류 발생! 결제 정보 또는 계정 상태를 재확인해주세요.<br>기술적 문제로 다음 단계 진입이 불가능합니다.`;
+            purchaseButton.textContent = '⚠️ 게이트웨이 실패: 다시 시도';
+            purchaseButton.style.backgroundColor = '#D4AF37'; // 원래 색상으로 복구
+        }
+
+        // 3. 상태 초기화 (잠시 후)
+        setTimeout(() => {
+            statusMessage.innerHTML = '';
+            purchaseButton.disabled = false;
+            purchaseButton.textContent = '💸 워크북 구매 및 Funnel 진입';
+            purchaseButton.style.backgroundColor = '#D4AF37';
+        }, 5000);
+    });
+
+</script>
+</body>
+</html>

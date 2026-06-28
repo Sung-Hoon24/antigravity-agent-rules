@@ -1,0 +1,15 @@
+{
+  "module_id": "VTM-DATASTREAM",
+  "function": "지속적인 아카이브 정보 흐름 (Background Continuity)",
+  "trigger_condition": ["Continuous Information Flow"],
+  "color_palette_usage": {
+    "base_line_color": "Deep Indigo (Low Opacity 0.1)",
+    "active_data_pulse": "Aged Gold (Slow Wave Motion)"
+  },
+  "parameters": {
+    "density": {"type": "float", "min": 0.1, "max": 1.5, "default": 1.0}, // 정보의 밀도
+    "scroll_speed_px_sec": {"type": "float", "min": 0.5, "max": 3.0, "default": 1.2},
+    "pulse_frequency_hz": {"type": "float", "min": 0.5, "max": 4.0, "default": 1.5} // 데이터가 빛나는 주파수
+  },
+  "developer_notes": "이 모듈은 항상 배경에서 흐르며, 다른 VTM 이벤트 발생 시 '끊기거나(Interruption)' '오류를 일으키는' 역할을 해야 함."
+}

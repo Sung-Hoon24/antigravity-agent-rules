@@ -1,0 +1,47 @@
+{
+    "title": "시스템 파라미터가 깨질 때 벌어지는 일",
+    "totalDuration": 10,
+    "scenes": [
+        {
+            "timeStart": 0.0,
+            "duration": 1.2,
+            "state": "Normal (Green)",
+            "content_type": "Hook",
+            "description": "정상 상태의 환상 제시.",
+            "p_value": {"stability": 0.9, "integrity": 0.8}
+        },
+        {
+            "timeStart": 1.2,
+            "duration": 1.6,
+            "state": "Warning (Yellow)",
+            "content_type": "Setup",
+            "description": "파라미터($P$)의 정의와 첫 번째 균열 감지.",
+            "p_value": {"stability": 0.7, "integrity": 0.6}
+        },
+        {
+            "timeStart": 2.8,
+            "duration": 3.5,
+            "state": "Critical (Red)",
+            "content_type": "Anomaly/Failure",
+            "description": "핵심 실패 조건(Failure Condition) 발생 지점.",
+            "failureTrigger": true,
+            "p_value": {"stability": 0.1, "integrity": 0.2}
+        },
+        {
+            "timeStart": 6.3,
+            "duration": 2.0,
+            "state": "Recovery (Fluctuating)",
+            "content_type": "Resolution/Open Loop",
+            "description": "붕괴 이후의 회복 과정 및 다음 질문 제시.",
+            "p_value": {"stability": 0.5, "integrity": 0.4}
+        },
+        {
+            "timeStart": 8.3,
+            "duration": 2.0,
+            "state": "CTA (Paid Gate)",
+            "content_type": "Conclusion/Call to Action",
+            "description": "궁극적인 결론 및 유료 콘텐츠로의 전환 유도.",
+            "p_value": {"stability": 1.0, "integrity": 1.0}
+        }
+    ]
+}

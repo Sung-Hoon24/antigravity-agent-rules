@@ -1,0 +1,60 @@
+{
+  "title": "Integrated Content Workflow Schema",
+  "description": "영상 콘텐츠의 모든 논리적, 기술적 흐름을 정의하는 API 스펙 V1.0. 시간 축(Time-based)과 상태 변화(State Transition)를 중심으로 설계됨.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "sequence_id": {"type": "string", "description": "순차적 섹션 식별자 (예: HOOK_A, GAP_TRANSITION)"},
+      "time_range": {
+        "type": "object",
+        "properties": {
+          "t_start_sec": {"type": "number", "description": "섹션 시작 시간 (초 단위)"},
+          "t_end_sec": {"type": "number", "description": "섹션 종료 시간 (초 단위)"}
+        },
+        "required": ["t_start_sec", "t_end_sec"]
+      },
+      "narrative_segment": {
+        "type": "object",
+        "properties": {
+          "script_source": {"type": "string", "description": "Writer 스크립트 구간 (예: [00:01 - 00:45])"},
+          "core_argument": {"type": "string", "description": "해당 섹션의 핵심 논지/주제"}
+        },
+        "required": ["script_source"]
+      },
+      "transition_module": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "gap_detected": {"type": "boolean", "description": "논리적 충돌 발생 여부 (Cognitive Gap)"},
+              "module_id": {"type": "string", "description": "사용할 VTM 모듈 ID (예: Void_Type_3)"},
+              "api_spec": {
+                "type": "object",
+                "properties": {
+                  "params": {"type": "array", "items": {"type": ["string", "number"]}},
+                  "state_change": {"type": "string", "description": "전환 후 시스템 상태 (예: INFO_A -> QUESTION)"}
+                },
+                "required": ["params", "state_change"]
+              },
+              "audio_spec": {
+                "type": "object",
+                "properties": {
+                  "bgm_id": {"type": "string"},
+                  "emotional_arc": {"type": "string"}
+                }
+              }
+            },
+            "required": ["module_id", "api_spec"]
+          }
+        ]
+      },
+      "cta_logic": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "이 섹션에서 유도하는 CTA (예: 'End Screen PlayList Link', 'Comment Question Prompt')."
+      }
+    },
+    "required": ["sequence_id", "time_range", "narrative_segment"]
+  }
+}

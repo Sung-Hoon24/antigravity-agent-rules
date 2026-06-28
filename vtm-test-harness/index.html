@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTM Test Harness | Conflict Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>VTM Transition Core (C-01) 테스트 하네스</h1>
+        <p class="subtitle">논리적 충돌 지점(Conflict Point) 시각화 및 기능 검증 환경</p>
+    </header>
+
+    <div class="container">
+        <!-- 1. Stable Input Zone -->
+        <section id="stable-input" class="visual-module stable-state active">
+            <h2>[Phase 1: 안정적 정보 입력]</h2>
+            <p>현재의 확정된 논리 구조 및 근거 자료가 로드되고 있습니다.</p>
+            <button id="trigger-conflict-btn" class="action-btn">논리 충돌 발생 시뮬레이션 시작</button>
+        </section>
+
+        <!-- 2. Transition/Conflict Zone (The VTM Effect) -->
+        <section id="transition-module" class="visual-module transition-state hidden">
+            <h2>[Phase 2: 정보 왜곡 및 전환 (VTM)]</h2>
+            <p class="effect-text">데이터가 재정렬되고 있습니다... 불안정한 신호 감지. (Glitch/De-resolution)</p>
+        </section>
+
+        <!-- 3. Error Output Zone -->
+        <section id="error-output" class="visual-module error-state hidden">
+            <h2>[Phase 3: 구조적 결함 발생]</h2>
+            <div id="error-message"></div>
+            <button id="reset-btn" class="action-btn reset">시스템 리셋 및 재시도</button>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026. VTM Test Harness Prototype v1.0 | API Spec 기반 구현</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

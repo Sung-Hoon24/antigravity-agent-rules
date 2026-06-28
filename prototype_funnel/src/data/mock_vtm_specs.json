@@ -1,0 +1,24 @@
+{
+  "VTM-001": {
+    "triggerState": "Knowledge_Gap_Trigger",
+    "targetState": "Mini_Archive_Reveal",
+    "params": {
+      "durationMs": 800,
+      "colorStart": "#3d0a6b",
+      "colorEnd": "#c2943e",
+      "effectType": "Glitch_Void",
+      "opacityTransition": [0.1, 1.0]
+    },
+    "logic": "State Transition: Info -> Void (Cognitive Shock)"
+  },
+  "VTM-END": {
+    "triggerState": "Resolution_CTA",
+    "targetState": "External_Link",
+    "params": {
+      "durationMs": 1500,
+      "overlayText": "더 깊은 이해를 위해...",
+      "type": "Persistent Overlay"
+    },
+    "logic": "Final CTA Push: Void -> Action"
+  }
+}

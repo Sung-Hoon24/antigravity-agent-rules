@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "P_001_TimeDynamics",
+    "academic_field": "Physics/Cosmology",
+    "description": "시간의 선형성(Linearity)과 엔트로피 법칙에 대한 고전적 이해 기반 테스트.",
+    "initial_state": {
+      "concept": "엔트로피는 항상 증가하며, 시간은 단방향적이다 (T>0).",
+      "default_model": "Classical Thermodynamics Model V1.0",
+      "assumption_level": 3
+    },
+    "failure_condition": {
+      "trigger_type": "Anomaly Detection",
+      "error_name": "Temporal Backflow / Information Loss Point (t-gap)",
+      "required_p_value_threshold": 0.05,
+      "simulation_parameter_change": ["Directionality Flag Inversion", "Energy Conservation Failure"]
+    },
+    "recovery_mechanism": {
+      "insight_title": "시간적 다중성(Temporal Multiplicity) 모델 도입의 필요성.",
+      "new_model_concept": "시간을 선형 평면이 아닌, 여러 겹의 차원적 평면으로 인식해야 함 (Multi-Dimensional State Space).",
+      "implementation_logic": "사용자에게 다차원 모델 개념 시각화를 통해 '지식적 결핍' 유도."
+    }
+  },
+  {
+    "scenario_id": "E_002_KnowledgeStructure",
+    "academic_field": "Epistemology/Philosophy",
+    "description": "논리 시스템의 완결성과 경계 설정에 대한 고전적 이해 기반 테스트.",
+    "initial_state": {
+      "concept": "모든 지식은 완벽하게 논리적으로 체계화되고 설명될 수 있다 (Closed System).",
+      "default_model": "Euclidean Logic Framework V2.0",
+      "assumption_level": 4
+    },
+    "failure_condition": {
+      "trigger_type": "Edge Case Detection",
+      "error_name": "Black Swan Event / Undefined Logical Gap (L-Gap)",
+      "required_p_value_threshold": 0.1,
+      "simulation_parameter_change": ["Prediction Failure Rate Spike", "Boundary Condition Breach"]
+    },
+    "recovery_mechanism": {
+      "insight_title": "불완전성의 인정과 개방 시스템(Open System)의 수용.",
+      "new_model_concept": "지식의 경계 자체가 학습 대상이며, 논리적 닫힘을 포기하고 '미결 질문' 자체를 가치화해야 함.",
+      "implementation_logic": "사용자에게 미해결 질문 목록을 제시하여 능동적인 탐색 유도."
+    }
+  },
+  {
+    "scenario_id": "C_003_ComputationalLimits",
+    "academic_field": "Computer Science/AI Theory",
+    "description": "계산 가능성(Computability)의 한계와 알고리즘적 모순 발견 테스트.",
+    "initial_state": {
+      "concept": "모든 문제는 유한한 시간 내에 결정 가능한 알고리즘으로 해결 가능하다 (Turing Completeness).",
+      "default_model": "Deterministic Algorithm Model V3.0",
+      "assumption_level": 5
+    },
+    "failure_condition": {
+      "trigger_type": "Halting Problem Simulation",
+      "error_name": "Unsolvable Paradox / Infinite Loop Potential (H-Loop)",
+      "required_p_value_threshold": 0.01,
+      "simulation_parameter_change": ["Resource Exhaustion Warning", "Convergence Failure"]
+    },
+    "recovery_mechanism": {
+      "insight_title": "결정 불가능성(Undecidability)의 수용과 근사 해법 개발.",
+      "new_model_concept": "문제 자체를 푸는 것보다, '어떤 방식으로 풀지'에 대한 메타적 프레임워크가 중요함. (Approximation Theory)",
+      "implementation_logic": "최적화된 부분 집합(Subset)을 정의하고 다음 단계의 연구 영역으로 제시."
+    }
+  },
+  {
+    "scenario_id": "G_004_EconomicParadigm",
+    "academic_field": "Economics/System Dynamics",
+    "description": "경제 시스템의 안정성과 예측 가능성에 대한 통념적 가정 검증.",
+    "initial_state": {
+      "concept": "시장은 결국 효율적인 균형점(Equilibrium)을 찾아 수렴한다 (Efficient Market Hypothesis).",
+      "default_model": "Neoclassical Equilibrium Model V4.0",
+      "assumption_level": 3
+    },
+    "failure_condition": {
+      "trigger_type": "Feedback Loop Overload",
+      "error_name": "Systemic Collapse / Non-Linear Feedback Shock (K-Shock)",
+      "required_p_value_threshold": 0.03,
+      "simulation_parameter_change": ["Positive Correlation Breakdown", "Self-Correction Failure"]
+    },
+    "recovery_mechanism": {
+      "insight_title": "균형점 자체를 목표로 삼지 않고, '변화의 과정'을 관리하는 시스템으로 전환.",
+      "new_model_concept": "비선형적이고 순환적인 에너지(Cycle) 구조가 안정성을 유지하며, 외부 충격 흡수 능력이 핵심 가치임.",
+      "implementation_logic": "시스템 붕괴 시나리오를 제시하고 이를 막기 위한 '제도적 장치' 학습 유도."
+    }
+  },
+  {
+    "scenario_id": "B_005_EthicalAIModel",
+    "academic_field": "Ethics/Information Theory",
+    "description": "기술의 중립성과 완벽한 예측 가능성에 대한 오해 검증.",
+    "initial_state": {
+      "concept": "데이터와 알고리즘은 객관적이며, 공정하고 편향되지 않은 결과를 도출한다 (Technological Determinism).",
+      "default_model": "Objective AI Model V1.0",
+      "assumption_level": 4
+    },
+    "failure_condition": {
+      "trigger_type": "Bias Amplification Test",
+      "error_name": "Hidden Bias Leakage / Data Poisoning Effect (B-Leak)",
+      "required_p_value_threshold": 0.02,
+      "simulation_parameter_change": ["Fairness Metric Degradation", "Group Parity Violation"]
+    },
+    "recovery_mechanism": {
+      "insight_title": "데이터와 알고리즘은 결코 중립적이지 않으며, 인간의 가치 판단이 개입되어야 함.",
+      "new_model_concept": "기술을 '도구'로 보고, 사용자가 어떤 목적과 윤리를 가지고 적용할지 고민하는 메타-레벨의 사고가 필요함. (Human in the Loop)",
+      "implementation_logic": "AI 결과에 대한 의사결정 과정에 인간의 개입 지점(Control Point)을 강제로 추가하도록 유도."
+    }
+]

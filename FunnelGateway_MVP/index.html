@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnel Gateway MVP Prototype (Codari)</title>
+    <link rel="stylesheet" href="./FunnelGateway_MVP/style.css">
+</head>
+<body>
+
+    <div id="container">
+        <!-- Hook Phase Content -->
+        <div id="hook-phase" class="content-section active">
+            <h1>[Phase 1: HOOK]</h1>
+            <p class="subtitle">당신의 지식은 이 질문 앞에서 멈춥니다. (Start)</p>
+            <div class="placeholder asset-placeholder">Hook Visual Asset Placeholder</div>
+        </div>
+
+        <!-- Gap Phase Content -->
+        <div id="gap-phase" class="content-section hidden">
+            <h1>[Phase 2: GATEWAY]</h1>
+            <div id="gateway-display" class="asset-container glitch-effect">
+                <!-- Designer가 정의한 Funnel Gateway 시각화 영역 -->
+                <p>🚨 SYSTEMIC DEFICIENCY DETECTED</p>
+                <p class="glitch-text">[Funnel Gateway Shader API Output]</p>
+            </div>
+            <p class="subtitle">이 간극(Gap)을 이해하려면, 새로운 정보가 필요합니다.</p>
+        </div>
+
+        <!-- Resolution Phase Content -->
+        <div id="resolution-phase" class="content-section hidden">
+            <h1>[Phase 3: RESOLUTION]</h1>
+            <div class="asset-placeholder">해결책 제시 에셋 Placeholder (CTA/Next Step)</div>
+            <button id="cta-button">다음 단계 탐색하기 (API 호출 지점)</button>
+        </div>
+
+        <!-- Universal Status Bar -->
+        <div id="status-bar">현재 상태: 초기화 중...</div>
+    </div>
+
+    <script src="./FunnelGateway_MVP/script.js"></script>
+</body>
+</html>
