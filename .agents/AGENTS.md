@@ -1,3 +1,6 @@
+<!-- GITHUB_SYNC_RULES_START -->
+<!-- RULES_FROM: https://github.com/Sung-Hoon24/antigravity-agent-rules.git -->
+<!-- FILE_HASH: f00462e117337ae7c8508cad4529315c4134539e3d3150c8874be21cab603e2a -->
 # 🛡️ [로컬] 프로젝트 표준 개발 지침서 (Workspace AGENTS Rules)
 
 본 문서는 유튜브 에이전트 프로젝트에서 백그라운드 런봇 서비스 및 API 컨트롤러를 개발/수정할 때 발생할 수 있는 장애를 원천 예방하고, 안전한 실행 환경을 유지하기 위해 모든 코딩 에이전트가 준수해야 할 필수 지침을 정의합니다.
@@ -38,11 +41,12 @@
   - *이유*: 저장소 이름이 `1.유튜브에이전트` 등으로 미세하게 변경되거나 대표님 로컬 드라이브 기동 환경이 바뀔 때 `FileNotFoundError` 장애가 발생하며, 이는 모듈 임포트 시점부터 시스템 크래시를 유발합니다.
 - **실행 환경 기준 동적 조립 필수**: 모든 로컬 사양 파일의 open 경로는 스크립트 실행 디렉토리를 기준으로 하는 `os.path` 조립 방식 적용을 강제합니다.
   - *올바른 코드 예시*:
-    ```python
-    import os
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    vtm_spec_path = os.path.join(current_dir, "VTM_API_Integration", "vtm_interface_spec.json")
-    ```
+
+```python
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+vtm_spec_path = os.path.join(current_dir, "VTM_API_Integration", "vtm_interface_spec.json")
+```
 
 ---
 
@@ -52,11 +56,13 @@
   - *이유*: 시각적 정지 화면 루프가 지속될 경우 유튜브 심사 봇에 의해 '재사용/반복 콘텐츠'로 감지되어 채널 수익화가 비활성화되는 것을 물리적으로 회피하기 위함입니다.
 - **오리지널리티 라이선스 명세 강제 결합**: 유튜브 자동 업로드 또는 기획안 설명란(`description`) 빌드 시, 동적으로 `[AURA/GREEN STUDY ORIGINALITY & CREATIVE LICENSE]` 블록을 합성하도록 프롬프트 지침 및 uploader 모듈을 설계해야 합니다.
   - *필수 표준 문구 (영문 전용)*:
-    ```text
-    This audio content is originally produced and mixed with professional artistic planning dedicated to wellness and emotional stability.
-    © 2026 [Channel Name]. All rights reserved.
-    ```
-  - *배치 규칙*: 글로벌 타겟 최적화(English Only 정체성 유지)를 위해 한국어 등의 번역 명세는 일절 노출하지 않으며, 영문 텍스트만 설명란의 가장 하단(Footer) 라이선스 블록 내부에 결합합니다.
+
+```text
+This audio content is originally produced and mixed with professional artistic planning dedicated to wellness and emotional stability.
+© 2026 [Channel Name]. All rights reserved.
+```
+
+- *배치 규칙*: 글로벌 타겟 최적화(English Only 정체성 유지)를 위해 한국어 등의 번역 명세는 일절 노출하지 않으며, 영문 텍스트만 설명란의 가장 하단(Footer) 라이선스 블록 내부에 결합합니다.
 - **음향 마스킹 및 영문 글로벌 단일화 의무**:
   - 음향 생성 시 자연음 ASMR의 마스킹 볼륨 비율을 적절히 높여 Content ID의 멜로디 오발령을 차단합니다.
   - 글로벌 채널 정체성을 수립할 때 한국어를 전면 배제하고, 모든 자막/제목/대본을 100% 완벽한 영문(English Only)으로 통일하여 출력하도록 LLM 지침을 엄격히 인코딩해야 합니다.
@@ -84,7 +90,7 @@
 
 ## [로컬] 8. 📜 "모든 스킬" 키워드 대응 지침 (Core Command Override)
 
-- **무조건 일괄 출력**: 사용자가 대화창에서 "모든 스킬" 또는 이에 준하는 스킬 일괄 조회 명령을 내릴 경우, 에이전트는 누락 없이 [README.md](file:///c:/1인기업/Apps/1.유튜브에이전트/README.md) 하단에 정리된 13종의 핵심 기술 스킬들(번호, 스킬 이름, 로컬 절대 경로, 주요 역할 및 기능)을 표(Table) 형태로 대화창에 한꺼번에 불러와 보여주어야 합니다.
+- **무조건 일괄 출력**: 사용자가 대화창에서 "모든 스킬" 또는 이에 준하는 스킬 일괄 조회 명령을 내릴 경우, 에이전트는 누락 없이 [README.md](file:///README.md) 하단에 정리된 13종의 핵심 기술 스킬들(번호, 스킬 이름, 로컬 절대 경로, 주요 역할 및 기능)을 표(Table) 형태로 대화창에 한꺼번에 불러와 보여주어야 합니다.
 
 ---
 
@@ -165,5 +171,10 @@
 
 ---
 
-<!-- GITHUB_SYNC_RULES_START -->
+## [로컬] 19. 📝 마크다운 코드 블록 언어 지정 및 파이썬 인덴트 가딩 규칙 (Lint & Parser Shield)
+
+- **코드 블록 들여쓰기 금지**: 마크다운 파일(`.md`) 내부에 기재하는 예제 파이썬 코드 펜스(` ```python `)와 내부 코드는 맨 앞에 공백 들여쓰기가 존재할 경우 Pyrefly 구문 분석기 가상 파일에서 `parse-error (Unexpected indentation)` 오류를 유발하므로, 반드시 들여쓰기 공백을 제거하고 왼쪽 맨 끝(Column 0)에 정렬하여 작성해야 합니다.
+- **예외 처리 및 펜스 언어 명시**: 모든 코드 펜스에는 반드시 공식 언어 명칭(`python`, `json`, `powershell`, `text` 등)을 기재하여 `MD040` 경고를 방지하며, specs 등의 대화 로그 폴더는 `.vscode/settings.json` 내의 `markdownlint.exclude` 설정을 통해 린트 스캔 대상에서 제외 관리합니다.
+
+---
 <!-- GITHUB_SYNC_RULES_END -->
