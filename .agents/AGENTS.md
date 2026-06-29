@@ -166,8 +166,6 @@
 ---
 
 <!-- GITHUB_SYNC_RULES_START -->
-<!-- RULES_FROM: https://github.com/Sung-Hoon24/antigravity-agent-rules.git -->
-<!-- FILE_HASH: ca38ad274fb70bf268ff4bdca4ff116bab3c2b27a5c6d72a760ee12d7d29fc65 -->
 # 🛡️ 프로젝트 표준 개발 지침서 (Workspace AGENTS Rules)
 
 본 문서는 유튜브 에이전트 프로젝트에서 백그라운드 런봇 서비스 및 API 컨트롤러를 개발/수정할 때 발생할 수 있는 장애를 원천 예방하고, 안전한 실행 환경을 유지하기 위해 모든 코딩 에이전트가 준수해야 할 필수 지침을 정의합니다.
