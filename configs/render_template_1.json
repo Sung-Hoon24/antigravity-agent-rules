@@ -1,0 +1,21 @@
+{
+  "template_id": 1,
+  "template_name": "Lofi_Typewriter_Lanczos_Render",
+  "vfx_skill": "vfx_slow_zoom_loop",
+  "intro_text_effect": "typewriter",
+  "intro_text": "Rubia Lofi - Deep Focus & Study BGM",
+  "typing_duration_seconds": 4.2,
+  "cursor_blink_frequency_hz": 2.0,
+  "subtitle_style": {
+    "font_name": "Segoe UI",
+    "font_size_longform": 36,
+    "font_size_shorts": 24,
+    "outline_width_px": 1,
+    "shadow_depth_px": 1
+  },
+  "ypp_safeguards": {
+    "hue_shift_filter": "H=0.02*sin(2*PI*t/30)",
+    "license_footer_enabled": true,
+    "license_text": "This audio content is originally produced and mixed with professional artistic planning dedicated to wellness and emotional stability.\n© 2026 Rubia Lofi. All rights reserved."
+  }
+}

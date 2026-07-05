@@ -5,6 +5,8 @@ import subprocess
 import importlib.util
 import json
 import imageio_ffmpeg
+from typing import Optional
+
 
 # FFmpeg 바이너리 경로 획득
 FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
@@ -475,7 +477,7 @@ def parse_script_to_ass(
         for start_sec, end_sec, text in sub_events:
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
-            text_clean = text.replace("**", "").replace("\n", "\\N")
+            text_clean = str(text).replace("**", "").replace("\n", "\\N")
             f.write(
                 f"Dialogue: 0,{start_str},{end_str},Default,,0,0,0,,{{\\fad(1500,1500)}}{text_clean}\n"
             )
@@ -518,6 +520,8 @@ def render_video(
     custom_style=None,
     script_text=None,
     fast_gate=False,
+    channel_key=None,
+    progress_path=None,
 ):
     """
     FFmpeg를 이용하여 이미지/비디오 배경, 오디오, 텍스트 자막을 합성하여 MP4 영상을 렌더링합니다.
@@ -533,7 +537,7 @@ def render_video(
     # 💡 [한글 주석] 대표님의 포그라운드 작업 환경 버벅임을 완벽 차단하기 위해
     # psutil을 통해 백그라운드 렌더링 프로세스의 CPU 우선순위를 IDLE(최하) 상태로 낮춥니다.
     try:
-        import psutil
+        import psutil  # type: ignore[import-untyped]
 
         p = psutil.Process(os.getpid())
         if sys.platform == "win32":
@@ -595,12 +599,33 @@ def render_video(
 
         safe_ass = ass_path.replace("\\", "/").replace(":", "\\:")
 
+        # 💡 [한글 주석] 대표님 지침 준수: 이퀄라이저(비주얼라이저)는 R&D 튜닝 완료 전까지 메인 렌더링에 절대 영향을 주지 않도록 False로 완벽 고정 차단합니다.
+        use_visualizer = False
+
+        # 💡 [한글 주석] 기획안 JSON 데이터(planning_data)에서 vfx_mode 및 vfx_skill 연출 파라미터를 안전하게 추출하여 플러그인에 전달합니다.
+        vfx_mode = "kenburns"
+        vfx_skill = None
+        if isinstance(planning_data, dict):
+            vfx_mode = planning_data.get("vfx_mode", "kenburns")
+            vfx_skill = planning_data.get("vfx_skill")
+
         # 🚨 [R&D Lab 플러그인 훅 가동]
+        # 💡 [한글 주석] 플러그인들이 기획안 템플릿의 세부 연출 설정(intro_text_effect 등)을 꺼내 쓸 수 있도록 planning_data 전체를 안전하게 풀어헤쳐 전달합니다.
+        plugin_kwargs = {
+            "video_format": video_format,
+            "output_dir": base_dir,
+            "vfx_mode": vfx_mode,
+            "vfx_skill": vfx_skill,
+            "use_equalizer": use_visualizer,
+            "audio_path": audio_path,
+        }
+        if isinstance(planning_data, dict):
+            plugin_kwargs.update(planning_data)
+
         processed_visual_path = load_and_apply_plugins(
             "before_render_visual",
             visual_path,
-            video_format=video_format,
-            output_dir=base_dir,
+            **plugin_kwargs
         )
         if processed_visual_path and processed_visual_path != visual_path:
             print(
@@ -613,28 +638,58 @@ def render_video(
             (".mp4", ".mkv", ".avi", ".mov", ".gif")
         )
 
-        # 3. 비디오 포맷에 따른 필터 구성
-        if video_format == "longform":
-            vf = (
-                "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,split=2[orig_raw][blurred_raw];"
-                "[blurred_raw]gblur=sigma=20[blurred];"
-                "[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
-                f"[blurred][orig_fade]overlay=format=auto[base];"
-                f"[base]subtitles='{safe_ass}'[subbed];"
-                f"[subbed]hue='H=0.02*sin(2*PI*t/30)'"
-            )
+        filter_complex = None
+        vf = None
+
+        if use_visualizer:
+            print("🎛️ [Visualizer] 오디오 반응형 showwaves 필터 합성을 준비합니다.")
+            if video_format == "longform":
+                filter_complex = (
+                    f"[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,split=2[orig_raw][blurred_raw];"
+                    f"[blurred_raw]gblur=sigma=20[blurred];"
+                    f"[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
+                    f"[blurred][orig_fade]overlay=format=auto[base];"
+                    f"[base]subtitles='{safe_ass}'[subbed];"
+                    f"[subbed]hue='H=0.02*sin(2*PI*t/30)'[vid_base];"
+                    f"[1:a]showwaves=s=1920x150:mode=line:colors=white:scale=sqrt,format=rgba[wave];"
+                    f"[vid_base][wave]overlay=x=0:y=900:format=auto"
+                )
+            else:
+                filter_complex = (
+                    f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,split=2[orig_raw][blurred_raw];"
+                    f"[blurred_raw]gblur=sigma=20[blurred];"
+                    f"[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
+                    f"[blurred][orig_fade]overlay=format=auto[base];"
+                    f"[base]subtitles='{safe_ass}'[subbed];"
+                    f"[subbed]hue='H=0.02*sin(2*PI*t/30)'[vid_base];"
+                    f"[1:a]showwaves=s=1080x200:mode=line:colors=white:scale=sqrt,format=rgba[wave];"
+                    f"[vid_base][wave]overlay=x=0:y=1500:format=auto"
+                )
         else:
-            vf = (
-                "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,split=2[orig_raw][blurred_raw];"
-                "[blurred_raw]gblur=sigma=20[blurred];"
-                "[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
-                f"[blurred][orig_fade]overlay=format=auto[base];"
-                f"[base]subtitles='{safe_ass}'[subbed];"
-                f"[subbed]hue='H=0.02*sin(2*PI*t/30)'"
-            )
+            print("⚠️ [Visualizer Fallback] 음원 파일 누락으로 비주얼라이저를 배제한 기본 필터를 적용합니다.")
+            if video_format == "longform":
+                vf = (
+                    "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,split=2[orig_raw][blurred_raw];"
+                    "[blurred_raw]gblur=sigma=20[blurred];"
+                    "[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
+                    f"[blurred][orig_fade]overlay=format=auto[base];"
+                    f"[base]subtitles='{safe_ass}'[subbed];"
+                    f"[subbed]hue='H=0.02*sin(2*PI*t/30)'"
+                )
+            else:
+                vf = (
+                    "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,split=2[orig_raw][blurred_raw];"
+                    "[blurred_raw]gblur=sigma=20[blurred];"
+                    "[orig_raw]format=rgba,fade=t=in:st=0:d=5:alpha=1[orig_fade];"
+                    f"[blurred][orig_fade]overlay=format=auto[base];"
+                    f"[base]subtitles='{safe_ass}'[subbed];"
+                    f"[subbed]hue='H=0.02*sin(2*PI*t/30)'"
+                )
 
         # 4. FFmpeg 명령어 동적 조립
         cmd = [FFMPEG_PATH, "-y"]
+        if progress_path:
+            cmd.extend(["-progress", progress_path])
 
         if is_video:
             cmd.extend(["-stream_loop", "-1", "-i", visual_path])
@@ -646,15 +701,23 @@ def render_video(
         # 💡 [한글 주석] pc_system_spec.json을 로드하여 NVIDIA GPU 가속(NVENC)이 지원되는 경우
         # libx264 대신 h264_nvenc 인코더를 동적 적용합니다. (CPU 부하 90% 이상 세이브)
         pc_spec = get_pc_spec()
-        if (
+        is_nvenc = (
             pc_spec.get("hw_acceleration_supported")
             and pc_spec.get("ffmpeg_codec") == "h264_nvenc"
-        ):
+        )
+
+        if is_nvenc:
             print("🚀 [GPU Acceleration] NVIDIA NVENC 가속 렌더링을 시작합니다 (-c:v h264_nvenc).")
+            if use_visualizer:
+                # 💡 [한글 주석] filter_complex가 None이 아님을 보장하여 Pyrefly 타입 가드를 통과시킵니다.
+                assert filter_complex is not None
+                cmd.extend(["-filter_complex", filter_complex])
+            else:
+                # 💡 [한글 주석] vf가 None이 아님을 보장하여 Pyrefly 타입 가드를 통과시킵니다.
+                assert vf is not None
+                cmd.extend(["-vf", vf])
             cmd.extend(
                 [
-                    "-vf",
-                    vf,
                     "-c:v",
                     "h264_nvenc",
                     "-preset",
@@ -669,10 +732,16 @@ def render_video(
             )
         else:
             print("💻 [CPU Rendering] CPU 기반 인코딩을 적용합니다 (-c:v libx264).")
+            if use_visualizer:
+                # 💡 [한글 주석] filter_complex가 None이 아님을 보장하여 Pyrefly 타입 가드를 통과시킵니다.
+                assert filter_complex is not None
+                cmd.extend(["-filter_complex", filter_complex])
+            else:
+                # 💡 [한글 주석] vf가 None이 아님을 보장하여 Pyrefly 타입 가드를 통과시킵니다.
+                assert vf is not None
+                cmd.extend(["-vf", vf])
             cmd.extend(
                 [
-                    "-vf",
-                    vf,
                     "-c:v",
                     "libx264",
                     "-tune",
@@ -770,7 +839,7 @@ def render_shorts(image_path, audio_path, script_text, output_path, fast_gate=Fa
     )
 
 
-def render_videos_parallel(tasks: list, max_workers: int = None) -> list:
+def render_videos_parallel(tasks: list, max_workers: Optional[int] = None) -> list:
     """
     [코디아 병렬화 최적화]
     ThreadPoolExecutor를 활용하여 다중 영상 렌더링 요청을 동시 병렬 처리(Parallel Processing)합니다.
