@@ -4602,7 +4602,11 @@
                     title.classList.add('active'); // 기동 시 기본은 active (펴짐)
 
                     // 📡 [한글 주석] 타이틀 영역 클릭 시 슬라이드 접기 토글 이벤트 바인딩
-                    title.addEventListener('click', () => {
+                    title.addEventListener('click', (e) => {
+                        // 📡 [한글 주석] 타이틀 영역 내부에 존재하는 리셋 단추, 배지, 링크, 버튼 클릭 시 토글 접기 오작동을 차단하는 이중 방어막 가드
+                        if (e.target.closest('#btn-reset-specs') || e.target.closest('#badge-intella-radar') || e.target.closest('button') || e.target.closest('a')) {
+                            return;
+                        }
                         const isCollapsed = body.classList.toggle('collapsed');
                         title.classList.toggle('active', !isCollapsed);
                         
@@ -4610,6 +4614,14 @@
                         if (toggleIcon) {
                             toggleIcon.textContent = isCollapsed ? 'expand_more' : 'expand_less';
                         }
+                    });
+
+                    // 📡 [한글 주석] 타이틀 내부의 리셋 단추 및 배지에 직접 클릭 버블링 방지 마운트
+                    const titleControls = title.querySelectorAll('button, a, span');
+                    titleControls.forEach(ctrl => {
+                        ctrl.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
                     });
 
                     // 📡 [한글 주석] 패널 내부의 각종 인터랙티브 요소 조작 시 상위 헤더로 클릭 이벤트 버블링이 전파되어 패널이 제멋대로 접히는 현상 영구 가드
