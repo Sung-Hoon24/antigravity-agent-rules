@@ -595,7 +595,8 @@
     <script>
         const video = document.getElementById('hidden-video');
         const vCanvas = document.getElementById('video-canvas');
-        const vCtx = vCanvas.getContext('2d');
+        // 🧚 [한글 주석] getImageData 고속 픽셀 판독 최적화를 위해 willReadFrequently 옵션을 true로 마운트
+        const vCtx = vCanvas.getContext('2d', { willReadFrequently: true });
         const gCanvas = document.getElementById('graph-canvas');
         const gCtx = gCanvas.getContext('2d');
 
