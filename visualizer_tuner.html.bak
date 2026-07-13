@@ -1021,7 +1021,7 @@
                 <p>Interactive Neon Spectrum Calibration Dashboard</p>
             </div>
         </div>
-        <div style="font-size: 11px; font-family: 'Fira Code', monospace; color: var(--primary-glow);">
+        <div id="text-vfx-integration" style="font-size: 11px; font-family: 'Fira Code', monospace; color: var(--primary-glow);">
             VFX Engine Integration: ACTIVE
         </div>
     </header>
@@ -3042,6 +3042,13 @@
                     cat: "야옹! 인텔라 녀석의 첩보 레이더가 아주 싱싱하게 켜져 있다는 표시등이다옹! 🐾 캡처 레이더 신호 대기 완료다냥!",
                     squirrel: "도토리 정찰병 인텔라의 무전기가 이 튜닝실과 빵빵하게 수신 연결되었다는 배지라구! 🐿️ 맘 편히 타사 영상 주파수를 털어와봐!",
                     owl: "부엉! 외부 비주얼 파동 첩보를 입수하는 정보 담당 요원 인텔라의 역분석 세션 소켓이 정상 Link-up 결합되었음을 상징하는 하트비트 시그널이다 부엉. 🛡️"
+                },
+                'text-vfx-integration': {
+                    girl: "대표님! 비디오 생성 백엔드의 'FFmpeg 비주얼라이저 모션 엔진'이 실시간 연결되어 가동 준비가 완료되었다는 뜻이랍니다...! 🌸",
+                    boy: "대표님! 백엔드 비디오 렌더러의 슬로우 줌인/줌아웃 물리 모션 모듈과 켄번즈 이펙트 엔진 통합망이 ACTIVE 상주 가동 중임을 증명합니다! ⚡",
+                    cat: "야옹! 멋지게 영상을 굽는 FFmpeg 엔진이 백그라운드에서 불을 뿜을 대기 상태라는 문구다옹! 🐾",
+                    squirrel: "3시간 명상 롱폼 비디오를 빌드하는 파이썬 VFX 합성 엔진이 메인보드에 찰딱 결합되어 켜져 있다는 소식이라구! 🔧",
+                    owl: "부엉! 유튜브 반복콘텐츠(YPP) 판정 우회를 지원하는 초미세 색조 순환 및 오디오 비주얼라이저 결합 VFX 렌더 모듈이 백엔드 단에서 준비 완료되었음을 뜻한다 부엉! 🛡️"
                 }
             };
 
@@ -4054,8 +4061,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드, 카피 JSON 및 사양서 패널/배지 요소들은 개별 호버 상세 멘트가 지정되었으므로 공통 순회에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy' || el.id === 'json-display' || el.id === 'json-title-export' || el.id === 'badge-intella-radar') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드, 카피 JSON 및 사양서 패널/배지/VFX텍스트 요소들은 개별 호버 상세 멘트가 지정되었으므로 공통 순회에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy' || el.id === 'json-display' || el.id === 'json-title-export' || el.id === 'badge-intella-radar' || el.id === 'text-vfx-integration') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
