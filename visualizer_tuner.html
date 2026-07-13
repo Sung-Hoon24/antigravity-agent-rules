@@ -1078,7 +1078,7 @@
     <div class="visualizer-hud">
         <!-- 왼쪽 컬럼: 시각 연출 제어 -->
         <div class="visualizer-hud-col">
-            <div class="hud-title">Visualizer Configuration</div>
+            <div class="hud-title" id="hud-title-config">Visualizer Configuration</div>
 
             <div class="visualizer-control-group">
                 <label>대칭 모드</label>
@@ -1152,7 +1152,7 @@
 
         <!-- 오른쪽 컬럼: 위치 및 오디오 파일 테스트 -->
         <div class="visualizer-hud-col">
-            <div class="hud-title">Placement & Local Audio Tester</div>
+            <div class="hud-title" id="hud-title-tester">Placement & Local Audio Tester</div>
 
             <div class="visualizer-control-group">
                 <label>X 좌표 (Left)</label>
@@ -1212,7 +1212,7 @@
     <div class="remix-section-grid">
         <!-- 1) Audio Tone Mixer (컨트롤 박스 1) -->
         <div class="remix-panel">
-            <div class="remix-title">
+            <div class="remix-title" id="remix-title-mixer">
                 <span class="material-symbols-outlined" style="color: var(--primary-glow);">equalizer</span>
                 1. Audio Tone Remixer (음색 믹싱 및 리메이크 출력)
             </div>
@@ -1313,7 +1313,7 @@
         <!-- 2) Visualizer response Knob Panel (컨트롤 박스 2) -->
         <div class="remix-panel">
             <div class="remix-title" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px;" id="remix-title-knobs">
                     <span class="material-symbols-outlined" style="color: var(--primary-glow);">tune</span>
                     <span>2. Visualizer response Knobs (비주얼 반응 감도 & 딜레이 턴 제어)</span>
                 </div>
@@ -1535,7 +1535,7 @@
     <!-- 🔬 [한글 주석] 3과제 역분석 판독기 연동 가이드 및 원클릭 자동 놉 튜닝 전용 독립 센터 증축 -->
     <div class="remix-panel" style="margin-top: 24px; padding: 20px; background: rgba(18, 14, 30, 0.8); border: 1px solid rgba(0, 242, 254, 0.15); box-shadow: 0 0 15px rgba(0, 242, 254, 0.05); border-radius: 12px;">
         <div class="remix-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 12px; margin-bottom: 16px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;" id="remix-title-reverse">
                 <span class="material-symbols-outlined" style="color: var(--primary-glow); font-size: 20px;">analytics</span>
                 <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.03em;">3. Reverse Engineering Recipe Auto-Alignment (역분석 판독 공식 자율 스냅 연동 센터)</span>
             </div>
@@ -2971,6 +2971,71 @@
                 labelBgImageUpload.addEventListener('mouseleave', hideTinkBalloon);
             }
 
+            // 🧚 [한글 주석] 대표님이 지정해주신 신규 헤더 및 버튼 요소 7종에 대한 팅커벨 요정 5색 호버 가이드 강제 결합
+            const extraGuidesConfig = {
+                'hud-title-config': {
+                    girl: "대표님! 비주얼라이저의 가로/세로 폭과 조명 테마, 대칭 방식을 정밀 튜닝하는 '비주얼 외형 관리소'랍니다...! 🌸",
+                    boy: "대표님! 비주얼라이저의 해상도 비율(1920x1080) 맞춤 크기와 기하학 조명 색채를 세팅하는 구성 허브 패널입니다! ⚡",
+                    cat: "야옹! 막대바들이 춤추는 무대의 조명과 크기를 재단하는 분장실이다옹! 테마를 바꿔서 화려함을 더해라냥! 🐾",
+                    squirrel: "화면을 가득 채울 네온 빛깔과 사이즈를 정밀 커스텀하는 성형실이라구! 취향껏 넓히고 높여봐! 🔧",
+                    owl: "부엉! 비주얼라이저의 공간 점유율과 색상 하모니를 정적으로 정의하는 외형 설정 기지이다 부엉. 🛡️"
+                },
+                'hud-title-tester': {
+                    girl: "대표님! 뷰포트 내 수평/수직 좌표 이동 및 로컬 음악 재생 장비가 모여 있는 '위치 및 사운드 테스트실'이랍니다...! 🌸",
+                    boy: "대표님! 비주얼라이저의 픽셀 좌표 배치 및 명상 사운드를 가상 출력하여 라이브 모션을 검수하는 테스트 헤드쿼터입니다! ⚡",
+                    cat: "야옹! 막대기들이 화면 어디에 서서 춤출지, 어떤 오디오에 맞춰 튕겨오를지 예행 연습을 격발하는 연습실이다옹! 🐾",
+                    squirrel: "X/Y 좌표 슬라이더로 배경 피사체를 사뿐히 비껴가고, 준비된 음악을 켜서 모션 반응을 검증하는 실험실이라구! 🔧",
+                    owl: "부엉! 자막과 배경 요소를 침범하지 않도록 안전 반경에 비주얼라이저를 배치하고 청음 테스트를 개시하는 연계 데스크다 부엉. 🛡️"
+                },
+                'remix-title-mixer': {
+                    girl: "대표님! 5밴드 주파수(저음, 중저음, 중음, 중고음, 고음)의 음량 데시벨(dB)을 슬라이더로 다이렉트 보정하는 '이퀄라이저 음색 리메이커'랍니다...! 🌸",
+                    boy: "대표님! 오디오 파형의 5대 핵심 음향 대역 볼륨을 믹싱 및 정밀 여과하여 거친 기계음을 지우고 따뜻한 웰니스 톤으로 리빌딩하는 아날로그 콘솔입니다! ⚡",
+                    cat: "야옹! 노래 소리를 더 웅장하게(BASS) 만들거나 맑게(TREBLE) 튜닝하는 5중 음량 필터믹서다옹! 🐾",
+                    squirrel: "5가지 주파수 슬라이더를 올리고 내려서 거친 잡음을 깎아내고 귀가 편안한 최적의 청아함을 조각해 내는 음질 믹서기라구! 🔧",
+                    owl: "부엉! 싱잉볼의 고음 영역과 드럼의 저음 영역 데시벨을 1:1로 튜닝하여 고품격 명상 앰비언트 음질로 정제하는 감쇠 필터부이다 부엉. 🛡️"
+                },
+                'remix-title-knobs': {
+                    girl: "대표님! 주파수 신호에 반응해 막대바가 치솟는 감도(Gain)와, 천천히 복귀하는 관성 지연 시간(Delay)을 미세 조향하는 '반응 감도 놉 튜닝실'이랍니다...! 🌸",
+                    boy: "대표님! 오디오 진폭에 실시간으로 결합해 막대 모션의 튀는 배율과 끈적임(Decay)을 4도 단위 다이얼로 스냅 정렬하는 물리 운동량 조향장치입니다! ⚡",
+                    cat: "야옹! 음악 신호에 막대바가 얼마나 높이 튕길지, 하강할 때 얼마나 쫀득하게 딜레이를 그리며 내려올지 조율하는 감도 조향 다이얼판이다옹! 🐾",
+                    squirrel: "다이얼 놉을 마우스 휠로 슥슥 돌려서 비주얼라이저의 역동적인 튀어오름과 대기 잔향 잔상의 끈적함을 조율하는 센서 컨트롤러라구! 🔧",
+                    owl: "부엉! FFT 파동 검출율의 상하 진폭과 하강 지수평활 딜레이 계수를 물리적으로 매핑하는 핵심 놉 조향 기판이다 부엉. 🛡️"
+                },
+                'remix-title-reverse': {
+                    girl: "대표님! 다른 유튜브 비디오의 이퀄라이저 움직임을 인공지능이 분석하여, 노브 레시피(JSON)를 0.1초 만에 자동 배치해 주는 '판독 연동 지휘 센터'랍니다...! 🌸",
+                    boy: "대표님! 비디오 센싱 레이더로 카피해 온 노브 공식 JSON 파일을 드롭하여 10개의 다이얼을 즉각 오토 스냅 기동시키는 자동화 수신국입니다! ⚡",
+                    cat: "야옹! 레이더에서 분석한 JSON 설정 파일을 드롭 존에 톡 떨구면 요정이 마법처럼 노브를 자동 정렬해 주는 자동화 제어 센터다옹! 🐾",
+                    squirrel: "스캔해 온 JSON 코드를 우측에 던져주기만 하면, 튜너 다이얼들이 자석처럼 최적 상관관계 수치로 오토매틱하게 샥 돌아간다구! 🔧",
+                    owl: "부엉! 스캐너에서 추출된 Pearson Correlation 상관 공식 데이터를 받아 튜너의 제어판을 즉각 교차 동기화시키는 오토 얼라인먼트 게이트웨이다 부엉. 🛡️"
+                },
+                'btn-copy': {
+                    girl: "대표님! 지금 공들여 튜닝하신 모든 노브와 비주얼 수치들을 클립보드에 JSON 텍스트로 복사하는 버튼이랍니다...! 파일로 내보내기 전에 텍스트로 보존하기 유용해요...! 🌸",
+                    boy: "대표님! 현재 튜너에 정렬된 놉 감도와 레이아웃 설정 일체를 클립보드에 표준 JSON 문자열로 즉각 복사하여 외부 사양서로 내보내는 격발기입니다! ⚡",
+                    cat: "야옹! 조율한 레시피 코드를 클립보드 주머니에 쏙 집어넣어 복사해 주는 복사기다옹! 🐾",
+                    squirrel: "지금까지 세팅한 이퀄라이저 다이얼과 감도 데이터를 1초 만에 JSON 텍스트로 카피하는 간편 버튼이라구! 🔧",
+                    owl: "부엉! 튜닝 사양서 텍스트 본을 복사하여 다른 작업 세션으로 바로 마운트할 수 있도록 데이터를 바인딩해 주는 내보내기 단추이다 부엉. 🛡️"
+                },
+                'tinkerbell-character': {
+                    girl: "앗... 대표님...! 팅커벨 요정을 쓰다듬어 주시는 건가요...? 헤헤, 튜닝이 막히실 땐 언제든 팅커벨의 말풍선을 콕 클릭해 주세요...! 🌸",
+                    boy: "대표님! 팅커벨 R&D 요정 비서가 튜너 시스템의 리소스 점유율 및 동작 무결성을 상시 백그라운드에서 수호하고 있습니다! ⚡",
+                    cat: "야옹~! 요정을 쓰다듬으면 기분이 좋다옹! 🐾 심심할 땐 날개 가루를 드래그해서 예쁜 파티클 아트를 캔버스에 그려봐라냥!",
+                    squirrel: "안녕 대표님! 날개 짓을 펄럭이며 대표님의 손끝을 쫓는 마법의 팅커벨 친구 다람쥐라구! 🐿️ 도토리처럼 소중한 놉 설정을 같이 완성해 보자!",
+                    owl: "부엉! 요정 비서가 비주얼라이저의 가독성 아웃라인(stroke 3px)과 아티스트 서명(Aura) 템플릿 규격 수호를 감시 감독하고 있다 부엉! 🦉"
+                }
+            };
+
+            Object.entries(extraGuidesConfig).forEach(([id, quotes]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('mouseenter', () => {
+                        if (!isTinkerbellActive) return;
+                        const quote = quotes[currentCharacter] || quotes.girl;
+                        showTinkBalloon(quote);
+                    });
+                    el.addEventListener('mouseleave', hideTinkBalloon);
+                }
+            });
+
             // 📸 [V1.1] 배경 이미지 업로드 및 실시간 E2E 프리뷰 연동
             const bgImageUpload = document.getElementById('bg-image-upload');
             const btnResetBg = document.getElementById('btn-reset-bg');
@@ -3968,8 +4033,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 역분석 제어 단추 3종 및 배경 이미지 업로드 앵커/라벨은 개별 특화 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드 및 카피 JSON 버튼 등 개별 호버 상세 멘트가 지정된 요소들은 공통 순회에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
