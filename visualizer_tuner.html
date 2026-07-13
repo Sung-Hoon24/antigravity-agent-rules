@@ -1639,15 +1639,19 @@
 
     <!-- 🔬 [한글 주석] 3과제 역분석 판독기 연동 가이드 및 원클릭 자동 놉 튜닝 전용 독립 센터 증축 -->
     <div class="remix-panel" style="margin-top: 24px; padding: 20px; background: rgba(18, 14, 30, 0.8); border: 1px solid rgba(0, 242, 254, 0.15); box-shadow: 0 0 15px rgba(0, 242, 254, 0.05); border-radius: 12px;">
-        <div class="remix-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 12px; margin-bottom: 16px;">
-            <div style="display: flex; align-items: center; gap: 8px;" id="remix-title-reverse">
+        <div class="remix-title" id="remix-title-reverse" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 12px; margin-bottom: 16px; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 8px;">
                 <span class="material-symbols-outlined" style="color: var(--primary-glow); font-size: 20px;">analytics</span>
                 <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.03em;">3. Reverse Engineering Recipe Auto-Alignment (역분석 판독 공식 자율 스냅 연동 센터)</span>
             </div>
-            <span id="badge-intella-radar" style="font-size: 9px; color: var(--primary-glow); font-family: monospace; border: 1px solid var(--primary-glow); padding: 2px 6px; border-radius: 4px; background: rgba(0, 242, 254, 0.05);">INTELLA RADAR CONNECTED</span>
+            <div style="display: flex; align-items: center; gap: 8px; margin-right: 12px; position: relative; z-index: 10;">
+                <span id="badge-intella-radar" style="font-size: 9px; color: var(--primary-glow); font-family: monospace; border: 1px solid var(--primary-glow); padding: 2px 6px; border-radius: 4px; background: rgba(0, 242, 254, 0.05);">INTELLA RADAR CONNECTED</span>
+            </div>
+            <span class="material-symbols-outlined remix-panel-toggle-icon">expand_less</span>
         </div>
         
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;">
+        <div class="remix-panel-body">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;">
             <!-- 좌측: 친절한 3단계 매뉴얼 & 판독기 바로가기 단추 -->
             <div style="color: var(--text-muted); font-size: 11px; line-height: 1.6;">
                 <h4 style="color: var(--text-main); font-size: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
@@ -1689,6 +1693,7 @@
                     💾 테스트한 템플릿 생성하기
                 </button>
             </div>
+            </div> <!-- 🧚 [한글 주석] remix-panel-body 영역 닫기 -->
         </div>
     </div>
 
@@ -4587,12 +4592,11 @@
                 });
             }
 
-            // 🧚 [한글 주석] 오디오 리믹서 및 노브 반응 서브패널 접기/펴기 슬라이드 토글 제어 리스너
-            const remixPanels = document.querySelectorAll('.remix-section-grid .remix-panel');
+            // 🧚 [한글 주석] 오디오 리믹서, 노브 반응, 역분석 얼라인먼트 3대 서브패널 접기/펴기 슬라이드 토글 제어 리스너
+            const remixPanels = document.querySelectorAll('.remix-panel');
             remixPanels.forEach(panel => {
                 const title = panel.querySelector('.remix-title');
                 const body = panel.querySelector('.remix-panel-body');
-                const resetBtn = panel.querySelector('#btn-reset-specs'); // 전체 리셋 버튼 수배
 
                 if (title && body) {
                     title.classList.add('active'); // 기동 시 기본은 active (펴짐)
@@ -4607,12 +4611,13 @@
                             toggleIcon.textContent = isCollapsed ? 'expand_more' : 'expand_less';
                         }
                     });
-                }
 
-                // 📡 [한글 주석] 기본값 전체 리셋 버튼 클릭 시 상위 타이틀 토글 이벤트로 번지는 버블링을 방지(e.stopPropagation)하여 오동작 차단
-                if (resetBtn) {
-                    resetBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                    // 📡 [한글 주석] 패널 내부의 각종 인터랙티브 요소 조작 시 상위 헤더로 클릭 이벤트 버블링이 전파되어 패널이 제멋대로 접히는 현상 영구 가드
+                    const stopBubbleTargets = body.querySelectorAll('button, a, input, .knob-svg-wrapper, #recipe-drop-zone, .copy-btn');
+                    stopBubbleTargets.forEach(target => {
+                        target.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
                     });
                 }
             });
