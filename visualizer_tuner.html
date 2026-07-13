@@ -2833,6 +2833,22 @@
                         saveRenderReverseBtn.disabled = false;
                     }
                 });
+
+                // 📡 [한글 주석] 핑크 버튼 호버 시 마스코트별 E2E 역분석 렌더링 기능 및 다음 단계 파이프라인 가이드 말풍선 송출
+                saveRenderReverseBtn.addEventListener('mouseenter', () => {
+                    if (!isTinkerbellActive) return;
+                    
+                    const guides = {
+                        girl: "에헤헤, 대표님! 이 버튼은 대표님이 추출하신 JSON 역분석 레시피를 먹여서 30초짜리 이퀄라이저 테스트 동영상을 인코딩하는 장치랍니다! 렌더링이 100% 끝나면 바로 하단 플레이어에 나타날 거예요. 그 뒤엔 연록색 버튼을 눌러 공인 템플릿으로 저장하시고, 터미널에서 <code>python scratch/build_aura_longform.py</code>를 기동하여 3시간 본편 비디오를 제작해 보세요! 🌸",
+                        boy: "오! 대표님! 이 버튼은 역분석된 주파수 값으로 백엔드에서 30초 인코딩을 격발하는 기능입니다! 렌더링 완료를 하단 플레이어에서 눈으로 확인한 뒤, 연록색 단추로 템플릿을 생성하십시오! 최종 빌드는 터미널을 열고 <code>python scratch/build_aura_longform.py</code> 명령을 기동해 3시간 대작을 렌더하면 끝납니다! ⚡",
+                        cat: "야옹! 대표님, 이 버튼은 카피해 온 JSON 놉 감도를 먹여서 30초 렌더링을 핫하게 돌려주는 단추다냥! 인코딩이 끝나면 하단 플레이어에 자동으로 영상이 뜬다옹! 그 후 템플릿 생성을 마치고 터미널에서 <code>python scratch/build_aura_longform.py</code> 를 돌려 3시간 풀 영상을 뽑아내라냥! 야옹~!",
+                        squirrel: "도토리 껍질 까듯이 놉 감도를 역분석해서 30초간 연산하는 테스트 렌더 모드라구! 🐿️ 렌더링이 종결되면 플레이어로 확인해 봐! 만족스러우면 연록색 버튼으로 템플릿을 저장하고, 다음 단계는 터미널을 켜서 <code>python scratch/build_aura_longform.py</code> 로 3시간 본 비디오를 최종 구워버리는 거야! 🔧",
+                        owl: "부엉! 이 핑크 단추는 역분석 레시피의 FFT 민감도를 30초 동안 FFmpeg로 테스트 렌더링하는 모드다 부엉! 🦉 완료 영상은 하단 검수용 플레이어에서 실시간 재생된다 부엉. 최종 저장을 마친 뒤엔 다음 단계로 터미널에 <code>python scratch/build_aura_longform.py</code> 를 기동하여 3시간 완성작을 생성하시라 부엉! 🛡️"
+                    };
+                    
+                    const quote = guides[currentCharacter] || guides.girl;
+                    showTinkBalloon(quote);
+                });
             }
 
             // 💾 [한글 주석] 테스트된 최종 조향값을 템플릿(template_01.json)으로 영구 등록 (연록색 버튼)
