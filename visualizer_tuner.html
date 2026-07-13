@@ -2718,15 +2718,120 @@
                 }
             });
 
-            // 📡 [한글 주석] 역분석 연동 완료 후 30초 테스트 영상 렌더링 가동 (핑크/보라색 버튼)
+            // 📡 [한글 주석] 역분석 연동 완료 후 30초 테스트 영상 렌더링 가동 (핑크/보라색 버튼 전용 비동기 핸들러)
             const saveRenderReverseBtn = document.getElementById('btn-save-render-reverse');
             if (saveRenderReverseBtn) {
-                saveRenderReverseBtn.addEventListener('click', () => {
-                    // 메인 저장 버튼인 saveRenderBtn 클릭 이벤트를 강제 격발하여 동일한 백엔드 렌더 시동 가동!
-                    if (isTinkerbellActive) {
-                        showTinkBalloon("저... 대표님...! [역분석 테스트 렌더링]이 성공적으로 트리거되었어요...! 화면 하단 비디오 플레이어를 지켜봐 주세요...! 🧚");
+                saveRenderReverseBtn.addEventListener('click', async () => {
+                    try {
+                        saveRenderReverseBtn.disabled = true;
+                        
+                        if (isTinkerbellActive) {
+                            showTinkBalloon("저... 대표님...! [역분석 테스트 렌더링]이 시작되었어요...! 화면 하단 비디오 플레이어를 지켜봐 주세요...! 🧚");
+                        }
+                        
+                        renderStatus.style.color = 'var(--primary-glow)';
+                        renderStatus.textContent = '💾 1단계: configs/visualizer_config.json에 튜닝 설정을 저장 중...';
+
+                        // 현재 대시보드 조향값 추출
+                        const symmetry = document.getElementById('v-symmetry-mode').value;
+                        const layout = document.getElementById('v-layout-mode').value;
+                        const colorTheme = document.getElementById('v-color-theme').value;
+                        const width = parseInt(document.getElementById('v-width').value);
+                        const height = parseInt(document.getElementById('v-height').value);
+                        const posX = parseInt(document.getElementById('v-pos-x').value);
+                        const posY = parseInt(document.getElementById('v-pos-y').value);
+
+                        const barCount = 16;
+                        const barW_1080p = 8;
+                        let barG_1080p = (width - (barCount * barW_1080p)) / (barCount - 1);
+                        if (barG_1080p < 1) barG_1080p = 1;
+
+                        const config = {
+                            "visualizer": {
+                                "symmetry": symmetry,
+                                "width_percent": Math.round((width / 1920) * 100),
+                                "height_px": height,
+                                "offset_x": posX,
+                                "offset_y": posY,
+                                "bar_style": {
+                                    "width_px": barW_1080p,
+                                    "gap_px": Math.round(barG_1080p),
+                                    "radius_px": 4,
+                                    "glow_blur_px": 10,
+                                    "color_theme": colorTheme
+                                }
+                            }
+                        };
+
+                        const saveRes = await fetch("http://127.0.0.1:5000/api/v1/visualizer/config", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(config)
+                        });
+
+                        if (!saveRes.ok) throw new Error('설정 저장 API 통신 실패');
+
+                        renderStatus.textContent = '🚀 2단계: 백엔드 30초 롱폼 템플릿1 인코더 기동 요청 발송 중...';
+
+                        const renderRes = await fetch("http://127.0.0.1:5000/api/v1/visualizer/render", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        });
+
+                        if (renderRes.status === 202) {
+                            renderStatus.style.color = 'var(--error-glow)';
+                            renderStatus.textContent = '🔒 대기: 현재 다른 렌더링 작업이 활성화 상태입니다.';
+                            saveRenderReverseBtn.disabled = false;
+                            return;
+                        }
+
+                        if (!renderRes.ok) throw new Error('렌더링 트리거 API 통신 실패');
+
+                        renderStatus.style.color = 'var(--primary-glow)';
+                        renderStatus.textContent = '⏳ 3단계: 백엔드 물리 인코딩 연산 진행 중... (약 1분 소요)';
+
+                        const pollInterval = setInterval(async () => {
+                            try {
+                                const statusRes = await fetch("http://127.0.0.1:5000/api/v1/visualizer/render/status");
+                                if (statusRes.ok) {
+                                    const statusData = await statusRes.json();
+                                    if (!statusData.is_rendering) {
+                                        clearInterval(pollInterval);
+                                        
+                                        renderStatus.style.color = '#a5e844';
+                                        renderStatus.textContent = '🎉 역분석 테스트 영상 렌더링 완료! 하단 플레이어에서 직접 검수하세요!';
+                                        
+                                        const videoPanel = document.getElementById('rendered-video-panel');
+                                        const videoEl = document.getElementById('rendered-video-element');
+                                        videoPanel.style.display = 'block';
+                                        
+                                        videoEl.src = `http://127.0.0.1:5000/api/v1/visualizer/video?t=${Date.now()}`;
+                                        videoEl.load();
+                                        videoEl.muted = true;
+                                        videoEl.play().catch(e => console.log("자동재생 실패:", e));
+                                        
+                                        setTimeout(() => {
+                                            saveRenderReverseBtn.disabled = false;
+                                            renderStatus.style.color = 'var(--text-muted)';
+                                            renderStatus.textContent = '대기 중 - 설정 저장 후 비디오 적용 테스트가 가능합니다.';
+                                        }, 10000);
+                                    }
+                                }
+                            } catch (pollErr) {
+                                console.error("상태 폴링 오류:", pollErr);
+                            }
+                        }, 4000);
+
+                    } catch (err) {
+                        console.error(err);
+                        renderStatus.style.color = 'var(--error-glow)';
+                        renderStatus.textContent = "❌ 오류: " + err.message;
+                        saveRenderReverseBtn.disabled = false;
                     }
-                    saveRenderBtn.click();
                 });
             }
 
