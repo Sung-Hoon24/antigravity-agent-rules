@@ -3792,7 +3792,18 @@
                 
                 const isNearRightEdge = tx > window.innerWidth / 2;
                 const suffix = isNearRightEdge ? '_right' : '';
-                tinkImg.src = `assets/characters/tinkerbell_rpg_${currentCharacter}${suffix}.png?v=1.4`;
+                const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
+                
+                // 📡 [한글 주석] 캐시 즉각 적재 및 경로 404 방지를 위해 src 매핑 전에 이벤트 핸들러 선행 바인딩
+                tinkImg.onload = () => {
+                    tinkImg.style.display = 'block';
+                    tinkSvg.style.display = 'none';
+                };
+                tinkImg.onerror = () => {
+                    tinkImg.style.display = 'none';
+                    tinkSvg.style.display = 'block'; // 이미지 로딩 실패 시 펄럭이는 SVG 날개 요정 강제 기화 노출!
+                };
+                tinkImg.src = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png?t=${Date.now()}`;
             });
 
             // 🧚 [한글 주석] 상황 및 테마별 팅커벨 대표님 조언 대본 DB (소녀, 소년, 고양이, 다람쥐, 올빼미 5색 컬러 매핑)

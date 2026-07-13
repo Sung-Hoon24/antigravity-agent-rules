@@ -1488,10 +1488,20 @@
                 tinkImg.style.display = 'block';
                 tinkSvg.style.display = 'none';
                 
-                // 🧚 [한글 주석] 실시간 물리 루프(updateTinkerbellPhysics)에서 X축 좌표(절반) 기준으로 좌향/우향 src를 자동 핫스왑하므로, 여기서는 이미지 표시 상태만 강제 리로드합니다.
                 const isNearRightEdge = tx > window.innerWidth / 2;
                 const suffix = isNearRightEdge ? '_right' : '';
-                tinkImg.src = `assets/characters/tinkerbell_rpg_${currentCharacter}${suffix}.png?v=1.4`;
+                const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
+                
+                // 📡 [한글 주석] 캐시 즉각 적재 및 경로 404 방지를 위해 src 매핑 전에 이벤트 핸들러 선행 바인딩
+                tinkImg.onload = () => {
+                    tinkImg.style.display = 'block';
+                    tinkSvg.style.display = 'none';
+                };
+                tinkImg.onerror = () => {
+                    tinkImg.style.display = 'none';
+                    tinkSvg.style.display = 'block'; // 이미지 로딩 실패 시 펄럭이는 SVG 날개 요정 강제 기화 노출!
+                };
+                tinkImg.src = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png?t=${Date.now()}`;
             });
 
             // 🧚 [한글 주석] 분석 레이더용 팅커벨 조언 대본 DB
