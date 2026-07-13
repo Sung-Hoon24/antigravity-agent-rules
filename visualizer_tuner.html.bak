@@ -708,6 +708,20 @@
             }
         }
 
+        /* 🧚 [한글 주석] 버튼 누를 때 (Click/Active) 튕기는 리액티브 피드백 애니메이션 및 색상 변화 적용 */
+        .audio-btn:active, .copy-btn:active, .render-trigger-btn:active, .custom-file-upload:active {
+            transform: scale(0.96) !important;
+            filter: brightness(1.2) !important;
+            box-shadow: 0 0 15px var(--primary-glow) !important;
+            background: rgba(0, 242, 254, 0.25) !important;
+            transition: all 0.05s ease-out !important;
+        }
+        /* 리셋 단추는 에러 빨간색 톤이므로 active 시 빨간색 계열로 뿜게 예외 지정 */
+        #btn-reset-specs:active {
+            background: rgba(255, 7, 58, 0.3) !important;
+            box-shadow: 0 0 15px var(--error-glow) !important;
+        }
+
         /* 🎛️ [V1.1] 오디오 리메이크 및 비주얼 턴 노브 프리미엄 스타일 */
         .remix-section-grid {
             display: grid;
@@ -4633,6 +4647,106 @@
                     });
                 }
             });
+
+            // 🔄 [한글 주석] 대시보드 모든 설정(다이얼, 슬라이더, 셀렉트 등)을 순정 사양으로 롤백하는 마스터 리셋 구현
+            const btnResetSpecs = document.getElementById('btn-reset-specs');
+            if (btnResetSpecs) {
+                btnResetSpecs.addEventListener('click', () => {
+                    if (!confirm("정말로 모든 튜닝 설정을 순정 기본값으로 리셋하시겠습니까?")) return;
+
+                    // 1. 슬라이더 설정값 복구
+                    document.getElementById('v-width').value = 552;
+                    document.getElementById('v-height').value = 202;
+                    document.getElementById('v-pos-x').value = 684;
+                    document.getElementById('v-pos-y').value = 830;
+                    document.getElementById('v-global-sensitivity').value = 1.5;
+
+                    // 슬라이더 텍스트 즉시 동기화
+                    document.getElementById('v-width-txt').textContent = "552px";
+                    document.getElementById('v-height-txt').textContent = "202px";
+                    document.getElementById('v-pos-x-txt').textContent = "684px";
+                    document.getElementById('v-pos-y-txt').textContent = "830px";
+                    document.getElementById('v-global-sensitivity-txt').textContent = "1.50x";
+
+                    // 2. 셀렉트 드롭다운 복구
+                    document.getElementById('v-symmetry-mode').value = "both";
+                    document.getElementById('v-layout-mode').value = "absolute";
+                    document.getElementById('v-color-theme').value = "GOLD";
+
+                    // 3. 리믹스 오디오 BiquadFilter 슬라이더 및 텍스트 0dB 롤백
+                    const faders = ["bass", "lowmid", "mid", "highmid", "treble"];
+                    faders.forEach(band => {
+                        const fd = document.getElementById(`remix-${band}`);
+                        const fdTxt = document.getElementById(`remix-${band}-txt`);
+                        if (fd) fd.value = 0;
+                        if (fdTxt) fdTxt.textContent = "0.0 dB";
+                    });
+
+                    // 4. 노브 상태 변수 초기화
+                    vGainBass = 1.0;
+                    vGainLowMid = 1.0;
+                    vGainMid = 1.0;
+                    vGainHighMid = 1.0;
+                    vGainTreble = 1.0;
+
+                    vDelayBass = 0.83;
+                    vDelayLowMid = 0.83;
+                    vDelayMid = 0.76;
+                    vDelayHighMid = 0.83;
+                    vDelayTreble = 0.83;
+
+                    // 5. 노브 래퍼들을 돌며 GSAP 역방향 스핀 복귀 모션 기동
+                    const wrappers = document.querySelectorAll('.knob-svg-wrapper');
+                    wrappers.forEach(wrapper => {
+                        const dial = wrapper.querySelector('.knob-svg-dial');
+                        const knobId = wrapper.getAttribute('data-knob-id');
+                        let targetRot = 0;
+                        let displayVal = "x1.00";
+
+                        if (knobId.startsWith('gain-')) {
+                            targetRot = 0; // 게인 노브 기본값 x1.00 (0도)
+                            displayVal = "x1.00";
+                        } else {
+                            // 딜레이 노브 기본값 회전 복원
+                            if (knobId === 'delay-mid') {
+                                targetRot = 64; // delay-mid 기본값 0.76 (64도)
+                                displayVal = "0.76";
+                            } else {
+                                targetRot = 80; // 다른 딜레이 기본값 0.83 (80도)
+                                displayVal = "0.83";
+                            }
+                        }
+
+                        // GSAP 회전 롤백
+                        if (typeof gsap !== 'undefined') {
+                            gsap.to(dial, {
+                                rotation: targetRot,
+                                duration: 0.8,
+                                ease: "power2.out",
+                                onUpdate: () => {
+                                    const txtEl = document.getElementById(`v-${knobId}-txt`);
+                                    if (txtEl) txtEl.textContent = displayVal;
+                                },
+                                onComplete: () => {
+                                    const txtEl = document.getElementById(`v-${knobId}-txt`);
+                                    if (txtEl) txtEl.textContent = displayVal;
+                                }
+                            });
+                        }
+                    });
+
+                    // 6. UI 스타일 및 위치 전체 재동기화
+                    updateStyle();
+                    updatePosition();
+                    updateJSONExport();
+
+                    const renderStatus = document.getElementById('render-status');
+                    if (renderStatus) {
+                        renderStatus.style.color = '#ff073a';
+                        renderStatus.textContent = '🔄 튜너의 모든 설정이 공장 순정 기본값으로 초기화되었습니다.';
+                    }
+                });
+            }
 
             initAutoTinkerbellGuide();
             injectDynamicTinkerbellTips();
