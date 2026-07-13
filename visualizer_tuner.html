@@ -1136,7 +1136,7 @@
             <div class="visualizer-control-group">
                 <label>배경 이미지 설정 (Background)</label>
                 <div style="display: flex; gap: 8px; margin-top: 6px;">
-                    <label for="bg-image-upload" class="custom-file-upload"
+                    <label for="bg-image-upload" class="custom-file-upload" id="label-bg-image-upload"
                         style="flex: 1; text-align: center; justify-content: center; height: 32px;">
                         <span class="material-symbols-outlined" style="font-size: 16px;">image</span>배경 선택
                     </label>
@@ -2951,6 +2951,26 @@
                 launchAnalyzerBtn.addEventListener('mouseleave', hideTinkBalloon);
             }
 
+            // 📸 [한글 주석] 배경 이미지 업로드 라벨 호버 시 5색 요정별 배경 설정법 및 YPP 방어 가이드
+            const labelBgImageUpload = document.getElementById('label-bg-image-upload');
+            if (labelBgImageUpload) {
+                labelBgImageUpload.addEventListener('mouseenter', () => {
+                    if (!isTinkerbellActive) return;
+
+                    const bgGuides = {
+                        girl: "저... 대표님...! 명상 비디오의 분위기와 찰떡인 예쁜 풍경이나 명화 그림파일(.jpg 등)을 이 버튼으로 업로드해 보세요...! 🌸 업로드 즉시 6060 대시보드 뒷배경에 즉각 반영되어 프리뷰 검수할 수 있답니다...!",
+                        boy: "대표님! 명상 채널의 시각적 완성도를 결정할 고화질 배경 이미지를 장착하십시오! ⚡ 로드된 에셋은 가상 뷰포트에 실시간 투사되며, 백엔드 합성 렌더러가 비디오를 굽는 소스로도 즉각 마운트됩니다!",
+                        cat: "야옹! 명상의 감성을 최고조로 올려줄 오리지널 에셋 그림을 여기에 던져줘라냥! 🐾 웰니스 힐링을 위해 Empty landscape(사람이 없는 풍경) 이미지를 넣는 걸 절대 잊지 마라옹!",
+                        squirrel: "도토리 배경을 바꿀 뷰티풀한 풍경 일러스트를 올려보자구! 🐿️ 업로드하면 가상 스크린에 즉각 맵핑되구, 백엔드가 3시간 완성판 비디오를 렌더링할 때 배경 레이어로 자동 합성된다구! 🔧",
+                        owl: "부엉! 웰니스 BGM 채널의 원천 오리지널리티와 명화 예술 감성을 극대화해 줄 썸네일/배경 소스를 마운트하십시오. 🦉 인물이 없는 빈 고화질 풍경을 선택하시는 게 YPP 승인의 비결이다 부엉! 🛡️"
+                    };
+
+                    const quote = bgGuides[currentCharacter] || bgGuides.girl;
+                    showTinkBalloon(quote);
+                });
+                labelBgImageUpload.addEventListener('mouseleave', hideTinkBalloon);
+            }
+
             // 📸 [V1.1] 배경 이미지 업로드 및 실시간 E2E 프리뷰 연동
             const bgImageUpload = document.getElementById('bg-image-upload');
             const btnResetBg = document.getElementById('btn-reset-bg');
@@ -3948,8 +3968,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 역분석 제어 단추 3종은 개별 특화 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종 및 배경 이미지 업로드 앵커/라벨은 개별 특화 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
