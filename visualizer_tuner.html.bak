@@ -2718,6 +2718,81 @@
                 }
             });
 
+            // 📡 [한글 주석] 역분석 연동 완료 후 30초 테스트 영상 렌더링 가동 (핑크/보라색 버튼)
+            const saveRenderReverseBtn = document.getElementById('btn-save-render-reverse');
+            if (saveRenderReverseBtn) {
+                saveRenderReverseBtn.addEventListener('click', () => {
+                    // 메인 저장 버튼인 saveRenderBtn 클릭 이벤트를 강제 격발하여 동일한 백엔드 렌더 시동 가동!
+                    if (isTinkerbellActive) {
+                        showTinkBalloon("저... 대표님...! [역분석 테스트 렌더링]이 성공적으로 트리거되었어요...! 화면 하단 비디오 플레이어를 지켜봐 주세요...! 🧚");
+                    }
+                    saveRenderBtn.click();
+                });
+            }
+
+            // 💾 [한글 주석] 테스트된 최종 조향값을 템플릿(template_01.json)으로 영구 등록 (연록색 버튼)
+            const registerTemplateReverseBtn = document.getElementById('btn-register-template-reverse');
+            if (registerTemplateReverseBtn) {
+                registerTemplateReverseBtn.addEventListener('click', async () => {
+                    try {
+                        registerTemplateReverseBtn.disabled = true;
+                        
+                        // 현재 조율된 튜너 스펙 데이터 추출
+                        const symmetry = document.getElementById('v-symmetry-mode').value;
+                        const layout = document.getElementById('v-layout-mode').value;
+                        const colorTheme = document.getElementById('v-color-theme').value;
+                        const width = parseInt(document.getElementById('v-width').value);
+                        const height = parseInt(document.getElementById('v-height').value);
+                        const posX = parseInt(document.getElementById('v-pos-x').value);
+                        const posY = parseInt(document.getElementById('v-pos-y').value);
+
+                        const barCount = 16;
+                        const barW_1080p = 8;
+                        let barG_1080p = (width - (barCount * barW_1080p)) / (barCount - 1);
+                        if (barG_1080p < 1) barG_1080p = 1;
+
+                        const config = {
+                            "visualizer": {
+                                "symmetry": symmetry,
+                                "width_percent": Math.round((width / 1920) * 100),
+                                "height_px": height,
+                                "offset_x": posX,
+                                "offset_y": posY,
+                                "bar_style": {
+                                    "width_px": barW_1080p,
+                                    "gap_px": Math.round(barG_1080p),
+                                    "radius_px": 4,
+                                    "glow_blur_px": 10,
+                                    "color_theme": colorTheme
+                                }
+                            }
+                        };
+
+                        const res = await fetch("http://127.0.0.1:5000/api/v1/visualizer/template/save", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(config)
+                        });
+
+                        if (res.ok) {
+                            const data = await res.json();
+                            alert("💾 " + data.message);
+                            if (isTinkerbellActive) {
+                                showTinkBalloon("와! 대표님...! 튜닝 데이터가 <b>template_01.json</b>으로 시스템 템플릿 창고에 안전하게 공인 저장되었어요...! 🌸");
+                            }
+                        } else {
+                            throw new Error("템플릿 저장 API 통신 실패");
+                        }
+                    } catch (err) {
+                        alert("❌ 템플릿 저장 실패: " + err.message);
+                    } finally {
+                        registerTemplateReverseBtn.disabled = false;
+                    }
+                });
+            }
+
             // 📸 [V1.1] 배경 이미지 업로드 및 실시간 E2E 프리뷰 연동
             const bgImageUpload = document.getElementById('bg-image-upload');
             const btnResetBg = document.getElementById('btn-reset-bg');
