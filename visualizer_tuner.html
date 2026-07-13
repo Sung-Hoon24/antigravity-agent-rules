@@ -2854,6 +2854,23 @@
             // 💾 [한글 주석] 테스트된 최종 조향값을 템플릿(template_01.json)으로 영구 등록 (연록색 버튼)
             const registerTemplateReverseBtn = document.getElementById('btn-register-template-reverse');
             if (registerTemplateReverseBtn) {
+                // 📡 [한글 주석] 연록색 버튼 호버 시 마스코트별 템플릿 JSON 영구 등록 및 활용 방식 가이드
+                registerTemplateReverseBtn.addEventListener('mouseenter', () => {
+                    if (!isTinkerbellActive) return;
+
+                    const templateGuides = {
+                        girl: "저... 대표님...! 이 버튼을 클릭하시면 지금 튜닝하신 놉 설정값이 <code>outputs/template_01.json</code> 파일에 고이 저장되어요...! 이 템플릿은 추후 3시간 롱폼 비디오 렌더러 가동 시 핵심 사양서로 자동 로드된답니다...! 🌸",
+                        boy: "대표님! 놉 감도 매칭이 완료되었다면 이 버튼으로 즉각 JSON 설계도를 추출하십시오! 저장된 <code>template_01.json</code>은 렌더링 엔진 내부에서 실시간으로 스펙트럼 폭을 가이드하는 핵심 부품이 됩니다! ⚡",
+                        cat: "야옹! 대표님이 조율하신 감도 보정 수치가 <code>template_01.json</code> 이라는 고유 보관함에 쏙 저장된다옹! 🐾 3시간 본편 인코더를 돌리기 전에 이 템플릿 저장을 완료해 두는 것이 룰이다옹!",
+                        squirrel: "대표님! 도토리를 모으듯 지금의 놉 튜닝 레시피를 <code>template_01.json</code> 에 안전하게 킵해두자구! 🌰 저장해 두면 백엔드 비디오 빌더가 이 수치 그대로 명화 힐링 비디오를 구워낼 거야! 🔧",
+                        owl: "부엉! 대표님의 최종 FFT 리믹스 사양을 <code>template_01.json</code> 템플릿으로 공인 마크하는 기능이다 부엉! 🦉 이 파일은 롱폼 BGM 3시간 영상의 최종 설계서로 작용하여 합성 렌더러를 리드하게 된다 부엉! 🛡️"
+                    };
+
+                    const quote = templateGuides[currentCharacter] || templateGuides.girl;
+                    showTinkBalloon(quote);
+                });
+                registerTemplateReverseBtn.addEventListener('mouseleave', hideTinkBalloon);
+
                 registerTemplateReverseBtn.addEventListener('click', async () => {
                     try {
                         registerTemplateReverseBtn.disabled = true;
