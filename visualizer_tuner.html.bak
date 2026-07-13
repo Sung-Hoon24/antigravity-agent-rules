@@ -4359,6 +4359,13 @@
             // 📡 [한글 주석] LocalStorage 핫스왑 송출 데이터 디코드 및 놉 강제 스냅 적용 헬퍼
             function processHotSwapRecipe(recipeStr) {
                 if (!recipeStr) return;
+                
+                const recipeDropZone = document.getElementById('recipe-drop-zone');
+                const recipeDropIcon = document.getElementById('recipe-drop-icon');
+                const recipeDropText = document.getElementById('recipe-drop-text');
+                const recipeDropLed = document.getElementById('recipe-drop-led');
+                const recipeDropStatusText = document.getElementById('recipe-drop-status-text');
+
                 try {
                     const parsed = JSON.parse(recipeStr);
                     // 판독기에서 송출한 JSON 데이터의 유효성 검증
