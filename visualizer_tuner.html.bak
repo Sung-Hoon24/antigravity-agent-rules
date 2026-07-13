@@ -3890,6 +3890,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
+                    // 📡 [한글 주석] 핑크색 및 연록색 역분석 테스트 버튼은 개별 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
