@@ -3598,6 +3598,8 @@
             let isTinkerbellActive = true;
             let currentCharacter = 'girl';
             let lastTinkerbellQuote = "";
+            // 📡 [한글 주석] 매 프레임 tinkImg.src가 갱신되어 브라우저 이미지 디코더 스레드가 폭주/교착하는 것을 방지하는 캐시 보호막 변수
+            let lastTinkSrc = "";
             let isConsoleFolded = false;
 
             // 윈도우 포커스 감시 가드
@@ -3690,17 +3692,22 @@
                     if (tinkImg) {
                         const suffix = isFacingRight ? '_right' : '';
                         const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
+                        const nextSrc = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png`;
                         
-                        // 📡 [한글 주석] 캐시 즉각 적재 시 onload 씹힘 버그 방지를 위해 src 매핑 전에 이벤트 핸들러 선행 바인딩
-                        tinkImg.onload = () => {
-                            tinkImg.style.display = 'block';
-                            tinkSvg.style.display = 'none';
-                        };
-                        tinkImg.onerror = () => {
-                            tinkImg.style.display = 'none';
-                            tinkSvg.style.display = 'block'; // 이미지 로딩 실패 시 펄럭이는 SVG 날개 요정 강제 기화 노출!
-                        };
-                        tinkImg.src = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png?t=${Date.now()}`;
+                        // 📡 [한글 주석] 실제 팅커벨 방향/종류가 바뀔 때에만 딱 1번 src를 업데이트하여 브라우저 디코더 병목을 원천 방지
+                        if (lastTinkSrc !== nextSrc) {
+                            lastTinkSrc = nextSrc;
+                            
+                            tinkImg.onload = () => {
+                                tinkImg.style.display = 'block';
+                                tinkSvg.style.display = 'none';
+                            };
+                            tinkImg.onerror = () => {
+                                tinkImg.style.display = 'none';
+                                tinkSvg.style.display = 'block'; // 이미지 로딩 실패 시 펄럭이는 SVG 날개 요정 강제 기화 노출!
+                            };
+                            tinkImg.src = nextSrc + `?t=${Date.now()}`;
+                        }
                     }
 
                     tinkContainer.style.alignItems = 'center';
