@@ -4221,6 +4221,237 @@
                 }
             }
 
+            // 📂 [한글 주석] 역분석 레시피 파일 업로드, 드롭박스 연동 및 GSAP 윙- 다이얼 자동 스냅 정렬 구현 (독립 연동 센터 바인딩)
+            const recipeDropZone = document.getElementById('recipe-drop-zone');
+            const recipeUpload = document.getElementById('recipe-upload');
+            
+            // 헬퍼 함수: 파일 처리 바인딩 및 드롭존 LED 전광판 제어
+            function processRecipeFile(file) {
+                if (!file) return;
+                
+                const recipeDropZone = document.getElementById('recipe-drop-zone');
+                const recipeDropIcon = document.getElementById('recipe-drop-icon');
+                const recipeDropText = document.getElementById('recipe-drop-text');
+                const recipeDropLed = document.getElementById('recipe-drop-led');
+                const recipeDropStatusText = document.getElementById('recipe-drop-status-text');
+
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    try {
+                        const rawText = evt.target.result;
+                        console.log("📂 로드된 파일 원본 텍스트:", rawText);
+                        
+                        const recipe = JSON.parse(rawText);
+                        if (recipe.source !== "youtube_visualizer_analyzer") {
+                            // 📡 [한글 주석] 출처 데이터 오류 시 드롭 박스 내 적색 LED 및 텍스트 갱신 경고 처리
+                            recipeDropZone.style.borderColor = 'var(--neon-pink)';
+                            recipeDropZone.style.background = 'rgba(255, 7, 58, 0.04)';
+                            recipeDropIcon.style.color = 'var(--neon-pink)';
+                            recipeDropIcon.textContent = 'error';
+                            recipeDropText.innerHTML = '<span style="color: var(--neon-pink); font-weight:700;">❌ 출처 오류 (적용 실패)</span>';
+                            recipeDropLed.style.background = 'var(--neon-pink)';
+                            recipeDropLed.style.boxShadow = '0 0 8px var(--neon-pink)';
+                            recipeDropStatusText.style.color = 'var(--neon-pink)';
+                            recipeDropStatusText.textContent = "허가되지 않은 기획 레시피 규격입니다.";
+                            return;
+                        }
+
+                        const targetFreq = recipe.target_frequency_hz || 120;
+                        const confidence = recipe.confidence_pct || 100;
+                        
+                        // 1. 상태 변수 즉시 할당 (5밴드 놉 전체 조율 및 미제시 대역 보간법 방어)
+                        vGainBass = recipe.v_gain_bass !== undefined ? recipe.v_gain_bass : vGainBass;
+                        vGainMid = recipe.v_gain_mid !== undefined ? recipe.v_gain_mid : vGainMid;
+                        vGainTreble = recipe.v_gain_treble !== undefined ? recipe.v_gain_treble : vGainTreble;
+                        vGainLowMid = parseFloat(((vGainBass + vGainMid) / 2).toFixed(2));
+                        vGainHighMid = parseFloat(((vGainMid + vGainTreble) / 2).toFixed(2));
+
+                        // 2. 화면 노브 엘리먼트들을 수배하여 GSAP 3D 회전 기동
+                        const wrappers = document.querySelectorAll('.knob-svg-wrapper');
+                        wrappers.forEach(wrapper => {
+                            const dial = wrapper.querySelector('.knob-svg-dial');
+                            const knobId = wrapper.getAttribute('data-knob-id');
+                            let targetGain = 1.0;
+                            let isMatched = false;
+
+                            if (knobId === 'gain-bass') {
+                                targetGain = vGainBass;
+                                isMatched = true;
+                            } else if (knobId === 'gain-lowmid') {
+                                targetGain = vGainLowMid;
+                                isMatched = true;
+                            } else if (knobId === 'gain-mid') {
+                                targetGain = vGainMid;
+                                isMatched = true;
+                            } else if (knobId === 'gain-highmid') {
+                                targetGain = vGainHighMid;
+                                isMatched = true;
+                            } else if (knobId === 'gain-treble') {
+                                targetGain = vGainTreble;
+                                isMatched = true;
+                            }
+
+                            if (isMatched) {
+                                // 게인 배율(0.0~3.0) -> 회전각(-135~135도) 환산
+                                const pct = targetGain / 3.0;
+                                const targetRot = Math.round(pct * 270 - 135);
+                                
+                                // GSAP 윙- 다이얼 바늘 오토 스냅 연출
+                                gsap.to(dial, {
+                                    rotation: targetRot,
+                                    duration: 0.8,
+                                    ease: "power2.out",
+                                    onUpdate: () => {
+                                        // 회전 도중 값 텍스트 동적 실시간 갱신
+                                        const curAngle = gsap.getProperty(dial, "rotation");
+                                        const curPct = (curAngle + 135) / 270;
+                                        const displayVal = (curPct * 3.0).toFixed(2);
+                                        const txtEl = document.getElementById(`v-${knobId}-txt`);
+                                        if (txtEl) txtEl.textContent = "x" + displayVal;
+                                    },
+                                    onComplete: () => {
+                                        // 스냅 완료 후 값 최종 고정
+                                        const txtEl = document.getElementById(`v-${knobId}-txt`);
+                                        if (txtEl) txtEl.textContent = "x" + targetGain.toFixed(2);
+                                    }
+                                });
+                            }
+                        });
+
+                        // 3. UI 변경 사항 전체 갱신 동기화
+                        updateStyle();
+                        updateJSONExport();
+
+                        // 📡 [한글 주석] 로딩 성공 시 드롭 박스 내 연두색 LED 닷 및 주입 완료 상태 점등
+                        recipeDropZone.style.borderColor = 'var(--neon-green)';
+                        recipeDropZone.style.background = 'rgba(165, 232, 68, 0.04)';
+                        recipeDropIcon.style.color = 'var(--neon-green)';
+                        recipeDropIcon.textContent = 'check_circle';
+                        recipeDropText.innerHTML = '<span style="color: var(--neon-green); font-weight:700;">✓ 역분석 레시피 적용 성공!</span>';
+                        recipeDropLed.style.background = 'var(--neon-green)';
+                        recipeDropLed.style.boxShadow = '0 0 8px var(--neon-green)';
+                        recipeDropStatusText.style.color = 'var(--neon-green)';
+                        recipeDropStatusText.textContent = `${targetFreq}Hz 주입 완료 (신뢰도: ${confidence}%)`;
+
+                        const renderStatus = document.getElementById('render-status');
+                        if (renderStatus) {
+                            renderStatus.style.color = '#a5e844';
+                            renderStatus.textContent = `🎯 역분석 튜닝 완료: ${targetFreq}Hz 매칭 레시피 가져옴 (신뢰도: ${confidence}%)`;
+                        }
+                    } catch (err) {
+                        console.error("❌ 레시피 파싱 실패 세부 사유:", err);
+                        
+                        // 📡 [한글 주석] JSON 해독 오류 발생 시 드롭 박스 내 적색 LED 및 구체적 원인 텍스트바 갱신
+                        recipeDropZone.style.borderColor = 'var(--neon-pink)';
+                        recipeDropZone.style.background = 'rgba(255, 7, 58, 0.04)';
+                        recipeDropIcon.style.color = 'var(--neon-pink)';
+                        recipeDropIcon.textContent = 'error';
+                        recipeDropText.innerHTML = '<span style="color: var(--neon-pink); font-weight:700;">❌ 해독 실패 (포맷 오류)</span>';
+                        recipeDropLed.style.background = 'var(--neon-pink)';
+                        recipeDropLed.style.boxShadow = '0 0 8px var(--neon-pink)';
+                        recipeDropStatusText.style.color = 'var(--neon-pink)';
+                        recipeDropStatusText.textContent = err.message || "올바른 JSON 형식이 아닙니다.";
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            // 📡 [한글 주석] LocalStorage 핫스왑 송출 데이터 디코드 및 놉 강제 스냅 적용 헬퍼
+            function processHotSwapRecipe(recipeStr) {
+                if (!recipeStr) return;
+                try {
+                    const parsed = JSON.parse(recipeStr);
+                    // 판독기에서 송출한 JSON 데이터의 유효성 검증
+                    if (parsed.visualizer) {
+                        console.log("📡 [Hot-Swap] 수신 데이터 감지:", parsed);
+                        
+                        // 상관 매칭 기반의 크기/위치 강제 이식
+                        const viz = parsed.visualizer;
+                        if (viz.height_px) {
+                            const heightSlider = document.getElementById('v-height');
+                            if (heightSlider) {
+                                heightSlider.value = viz.height_px;
+                                document.getElementById('v-height-txt').textContent = viz.height_px + "px";
+                            }
+                        }
+                        
+                        // 📡 [한글 주석] 송출받은 가상의 Pearson 상관 가중치 복원 및 노브 연동
+                        if (viz.bar_style && viz.bar_style.color_theme) {
+                            const themeSelect = document.getElementById('v-color-theme');
+                            if (themeSelect) {
+                                themeSelect.value = viz.bar_style.color_theme;
+                            }
+                        }
+
+                        // 분석기의 최근 캐시 데이터 로드 시도
+                        const lastRecipeStr = localStorage.getItem('active_tuner_recipe');
+                        if (lastRecipeStr) {
+                            // 핫스왑 송출 성공 알림 LED 점등
+                            recipeDropZone.style.borderColor = 'var(--neon-green)';
+                            recipeDropZone.style.background = 'rgba(165, 232, 68, 0.04)';
+                            recipeDropIcon.style.color = 'var(--neon-green)';
+                            recipeDropIcon.textContent = 'sensors';
+                            recipeDropText.innerHTML = '<span style="color: var(--neon-green); font-weight:700;">✓ 무선 핫스왑 송출 연동 성공!</span>';
+                            recipeDropLed.style.background = 'var(--neon-green)';
+                            recipeDropLed.style.boxShadow = '0 0 8px var(--neon-green)';
+                            recipeDropStatusText.style.color = 'var(--neon-green)';
+                            recipeDropStatusText.textContent = "실시간 주파수 분석 사양 동기화 완료";
+
+                            const renderStatus = document.getElementById('render-status');
+                            if (renderStatus) {
+                                renderStatus.style.color = '#a5e844';
+                                renderStatus.textContent = "🎯 판독기로부터 핫스왑 무선 동기화 설정을 즉시 이식받았습니다.";
+                            }
+                        }
+
+                        updateStyle();
+                        updateJSONExport();
+                    }
+                } catch(e) {
+                    console.error("❌ 핫스왑 데이터 수집 해독 에러:", e);
+                }
+            }
+
+            if (recipeDropZone && recipeUpload) {
+                recipeDropZone.addEventListener('click', () => recipeUpload.click());
+                recipeUpload.addEventListener('change', (e) => {
+                    processRecipeFile(e.target.files[0]);
+                });
+
+                // 드래그 앤 드롭 비주얼 피드백 구현
+                recipeDropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    recipeDropZone.style.borderColor = 'var(--neon-green)';
+                    recipeDropZone.style.background = 'rgba(165, 232, 68, 0.08)';
+                });
+                recipeDropZone.style.transition = 'all 0.2s';
+                recipeDropZone.addEventListener('dragleave', () => {
+                    recipeDropZone.style.borderColor = 'rgba(165, 232, 68, 0.2)';
+                    recipeDropZone.style.background = 'rgba(165, 232, 68, 0.02)';
+                });
+                recipeDropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    recipeDropZone.style.borderColor = 'rgba(165, 232, 68, 0.2)';
+                    recipeDropZone.style.background = 'rgba(165, 232, 68, 0.02)';
+                    if (e.dataTransfer.files.length > 0) {
+                        processRecipeFile(e.dataTransfer.files[0]);
+                    }
+                });
+            }
+
+            // 📡 [한글 주석] 동일 Origin 탭 간 실시간 핫스왑 송출용 storage 이벤트 리스너 마운트
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'active_tuner_recipe' && e.newValue) {
+                    processHotSwapRecipe(e.newValue);
+                }
+            });
+
+            // 페이지 최초 진입 시 혹시 이미 송출된 데이터가 있는지 확인
+            const initRecipe = localStorage.getItem('active_tuner_recipe');
+            if (initRecipe) {
+                setTimeout(() => processHotSwapRecipe(initRecipe), 500);
+            }
+
             initAutoTinkerbellGuide();
             injectDynamicTinkerbellTips();
 
