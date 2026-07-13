@@ -1608,7 +1608,7 @@
     <!-- 📋 JSON 사양서 내보내기 패널 -->
     <div class="json-export-section">
         <div class="json-header">
-            <span class="json-title">4. Export Configuration JSON</span>
+            <span class="json-title" id="json-title-export">4. Export Configuration JSON</span>
             <button class="copy-btn" id="btn-copy">Copy JSON</button>
         </div>
         <div class="json-code" id="json-display"></div>
@@ -3021,6 +3021,20 @@
                     cat: "야옹~! 요정을 쓰다듬으면 기분이 좋다옹! 🐾 심심할 땐 날개 가루를 드래그해서 예쁜 파티클 아트를 캔버스에 그려봐라냥!",
                     squirrel: "안녕 대표님! 날개 짓을 펄럭이며 대표님의 손끝을 쫓는 마법의 팅커벨 친구 다람쥐라구! 🐿️ 도토리처럼 소중한 놉 설정을 같이 완성해 보자!",
                     owl: "부엉! 요정 비서가 비주얼라이저의 가독성 아웃라인(stroke 3px)과 아티스트 서명(Aura) 템플릿 규격 수호를 감시 감독하고 있다 부엉! 🦉"
+                },
+                'json-title-export': {
+                    girl: "대표님! 지금 조율하신 이퀄라이저 외형과 민감도 스펙들을 표준 JSON 텍스트로 보존 및 검사하는 '최종 사양서 출력소'랍니다...! 🌸",
+                    boy: "대표님! 놉 튜닝 결과와 가로/세로 좌표 등의 비주얼 사양 데이터 일체를 표준 JSON 레시피로 번들링하여 출력하는 최종 마일스톤 패널입니다! ⚡",
+                    cat: "야옹! 조율한 레시피 사양을 박제해서 봉인해 두는 최종 문서실이다옹! 🐾 여기에 복제된 수치가 곧 3시간 롱폼 비디오 렌더러의 설계 스펙이 된다옹!",
+                    squirrel: "완성된 튜닝 사양서를 JSON 코드로 봉투에 쏙 담아서 보여주는 최종 카운터라구! 🔧 감도가 올바르게 잡혔는지 최종 확인해 봐!",
+                    owl: "부엉! 비주얼라이저의 스케일, 테마, 위치 좌표 데이터 일체를 객체 형식의 JSON 레시피로 영구 구조화하는 명세서 디스플레이부이다 부엉. 🛡️"
+                },
+                'json-display': {
+                    girl: "저... 대표님...! 여기 표시된 복잡한 코드가 바로 놉 다이얼과 이퀄라이저의 핵심 설계도예요! 슬라이더를 조작하실 때마다 실시간으로 수치가 변하는 모습을 볼 수 있어요...! 🌸",
+                    boy: "대표님! 실시간 놉 조율 결과가 JSON 구조체 필드로 동적 스냅 업데이트되는 출력 모니터입니다! 데이터의 무결성과 키-값 매핑을 즉시 감시하실 수 있습니다! ⚡",
+                    cat: "야옹! 슬라이더를 만질 때마다 숫자와 영어가 샥샥 바뀌는 요술 상자다옹! 🐾 놉 감도와 크기가 실시간으로 코드화되어 저장 대기 중이다옹!",
+                    squirrel: "노브와 크기 조절 장치를 드래그해서 움직이면 이 안의 텍스트 수치들이 0.1초 만에 갱신된다구! 눈으로 레시피 값을 직접 체크해 봐! 🔧",
+                    owl: "부엉! 튜너에 실시간 적용 중인 visualizer 스펙 파라미터들이 JSON 구조 객체로 즉시 반영 투사되는 실시간 가상 터미널 보드다 부엉. 🛡️"
                 }
             };
 
@@ -4033,8 +4047,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드 및 카피 JSON 버튼 등 개별 호버 상세 멘트가 지정된 요소들은 공통 순회에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드, 카피 JSON 및 사양서 패널 요소들은 개별 호버 상세 멘트가 지정되었으므로 공통 순회에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy' || el.id === 'json-display' || el.id === 'json-title-export') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
