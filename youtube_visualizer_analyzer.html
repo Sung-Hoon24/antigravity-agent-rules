@@ -1393,8 +1393,8 @@
                     // 📡 [한글 주석] 상하좌우 센터를 기준으로 대칭형 구도를 완성하기 위해, 마우스 가로축 위치(mx)를 기준으로 시선 방향 결정 (관성 비행 중 플립 차단)
                     const tinkImg = document.getElementById('tinkerbell-img-icon');
                     if (tinkImg) {
-                        // 마우스가 화면 우측에 있으면 요정은 왼쪽을 쳐다보고, 좌측에 있으면 오른쪽을 쳐다보는 대칭 연출
-                        const suffix = isNearRightEdge ? '' : '_right';
+                        // 마우스가 화면 우측에 있으면 요정은 오른쪽을 쳐다보고, 좌측에 있으면 왼쪽을 쳐다보는 대칭 연출
+                        const suffix = isNearRightEdge ? '_right' : '';
                         const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
                         const nextSrc = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png`;
                         
@@ -1506,7 +1506,7 @@
                 tinkSvg.style.display = 'none';
                 
                 const isNearRightEdge = tx > window.innerWidth / 2;
-                const suffix = isNearRightEdge ? '' : '_right';
+                const suffix = isNearRightEdge ? '_right' : '';
                 const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
                 
                 // 📡 [한글 주석] 캐시 즉각 적재 및 경로 404 방지를 위해 src 매핑 전에 이벤트 핸들러 선행 바인딩
