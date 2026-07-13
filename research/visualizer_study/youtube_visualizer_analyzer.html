@@ -1394,10 +1394,12 @@
 
                     // 🧚 [한글 주석] 대표님의 핵심 피드백 반영: 요정의 실제 위치(tx)와 마우스 좌표(mx)의 수평 대소 관계에 따라 시선을 동적 결정!
                     // 요정이 마우스보다 왼쪽에 서 있으면(tx < mx) 오른쪽을 보고, 마우스보다 오른쪽에 서 있으면(tx >= mx) 왼쪽을 보아 언제나 100% 마주봅니다.
-                    const isFacingRight = tx < mx;
+                    // 📡 [한글 주석] 상하좌우 센터를 기준으로 대칭형 구도를 완성하기 위해, 요정의 화면 가로축 중앙선 대비 물리적 위치(tx)로 시선 방향 결정
+                    const isNearRightEdge = tx > (window.innerWidth / 2);
                     const tinkImg = document.getElementById('tinkerbell-img-icon');
                     if (tinkImg) {
-                        const suffix = isFacingRight ? '_right' : '';
+                        // 요정이 화면 우측에 있으면 '_right' (왼쪽 바라보기), 좌측에 있으면 '' (오른쪽 바라보기)로 대칭 연출
+                        const suffix = isNearRightEdge ? '_right' : '';
                         const basePath = window.location.pathname.includes("visualizer_study") ? "../../assets/characters/" : "assets/characters/";
                         const nextSrc = `${basePath}tinkerbell_rpg_${currentCharacter}${suffix}.png`;
                         
