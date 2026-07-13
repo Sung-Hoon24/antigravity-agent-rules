@@ -1554,7 +1554,7 @@
                     <li>유튜브 음악 화면을 캡처한 뒤, 감지 상자를 드래그하여 매칭된 분석 공식을 다운로드합니다.</li>
                     <li>우측 업로드 영역에 다운로드된 <strong style="color: var(--primary-glow);">JSON 파일</strong>을 선택하면 다이얼이 자동으로 정렬됩니다.</li>
                 </ol>
-                <a href="research/visualizer_study/youtube_visualizer_analyzer.html" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 242, 254, 0.1); border-color: var(--primary-glow); color: var(--primary-glow); font-weight: 700; padding: 6px 14px; font-size: 11px; border-radius: 4px; cursor: pointer; border: 1px solid var(--primary-glow); transition: all 0.2s;">
+                <a href="research/visualizer_study/youtube_visualizer_analyzer.html" target="_blank" class="copy-btn" id="btn-launch-analyzer" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 242, 254, 0.1); border-color: var(--primary-glow); color: var(--primary-glow); font-weight: 700; padding: 6px 14px; font-size: 11px; border-radius: 4px; cursor: pointer; border: 1px solid var(--primary-glow); transition: all 0.2s;">
                     <span class="material-symbols-outlined" style="font-size: 14px;">launch</span>
                     <span>🔗 역분석 판독기 레이더 켜기 (Launch Analyzer)</span>
                 </a>
@@ -2931,6 +2931,26 @@
                 });
             }
 
+            // 🔗 [한글 주석] 역분석 판독기 레이더 켜기 링크 호버 시 5색 요정별 역분석 레이더 활용 가이드
+            const launchAnalyzerBtn = document.getElementById('btn-launch-analyzer');
+            if (launchAnalyzerBtn) {
+                launchAnalyzerBtn.addEventListener('mouseenter', () => {
+                    if (!isTinkerbellActive) return;
+
+                    const analyzerGuides = {
+                        girl: "대표님! 이 링크를 클릭하시면 새 창으로 '역분석 판독기 레이더'가 열려요! 타인 채널 명상 영상의 이퀄라이저 움직임을 스캔 캡처하여 최적의 노브 설정값(JSON)을 자동으로 분석해 낸답니다...! 🌸",
+                        boy: "대표님! 새 탭으로 역분석 레이더 HUD를 작동시키는 통로입니다! 타사 영상의 FFT 주파수 밴드를 디코딩하여, 감도 보정 공식 레시피를 다운로드받는 실시간 스캔 시스템입니다! ⚡",
+                        cat: "야옹! 다른 채널의 멋진 명상곡 BGM 파형을 픽셀 단위로 통째로 털어오는 레이더 분석기를 여는 단추다냥! 🐾 캡처한 JSON 파일을 오른쪽 상자에 던져주면 노브가 순간이동한다옹!",
+                        squirrel: "도토리 창고를 터는 스캐너를 켜볼까? 🐿️ 타 영상의 이퀄라이저 높이 변화를 실시간 상관계수로 대조 분석하여, 1초 만에 놉 세팅을 복제해 주는 레이더실을 열어준다구! 🔧",
+                        owl: "부엉! 다른 명상 채널의 시각 파동을 센싱 역분석하는 비주얼 레이다 스캔실을 새 창으로 격발한다 부엉! 🦉 분석 완료된 JSON 스펙은 튜닝실의 놉 다이얼을 0.1초 만에 오토매틱으로 맞추는 열쇠가 된다 부엉! 🛡️"
+                    };
+
+                    const quote = analyzerGuides[currentCharacter] || analyzerGuides.girl;
+                    showTinkBalloon(quote);
+                });
+                launchAnalyzerBtn.addEventListener('mouseleave', hideTinkBalloon);
+            }
+
             // 📸 [V1.1] 배경 이미지 업로드 및 실시간 E2E 프리뷰 연동
             const bgImageUpload = document.getElementById('bg-image-upload');
             const btnResetBg = document.getElementById('btn-reset-bg');
@@ -3928,8 +3948,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 핑크색 및 연록색 역분석 테스트 버튼은 개별 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종은 개별 특화 상세 가이드가 존재하므로 공인 가이더 루프에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
