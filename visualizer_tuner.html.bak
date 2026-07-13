@@ -1539,7 +1539,7 @@
                 <span class="material-symbols-outlined" style="color: var(--primary-glow); font-size: 20px;">analytics</span>
                 <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.03em;">3. Reverse Engineering Recipe Auto-Alignment (역분석 판독 공식 자율 스냅 연동 센터)</span>
             </div>
-            <span style="font-size: 9px; color: var(--primary-glow); font-family: monospace; border: 1px solid var(--primary-glow); padding: 2px 6px; border-radius: 4px; background: rgba(0, 242, 254, 0.05);">INTELLA RADAR CONNECTED</span>
+            <span id="badge-intella-radar" style="font-size: 9px; color: var(--primary-glow); font-family: monospace; border: 1px solid var(--primary-glow); padding: 2px 6px; border-radius: 4px; background: rgba(0, 242, 254, 0.05);">INTELLA RADAR CONNECTED</span>
         </div>
         
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;">
@@ -3035,6 +3035,13 @@
                     cat: "야옹! 슬라이더를 만질 때마다 숫자와 영어가 샥샥 바뀌는 요술 상자다옹! 🐾 놉 감도와 크기가 실시간으로 코드화되어 저장 대기 중이다옹!",
                     squirrel: "노브와 크기 조절 장치를 드래그해서 움직이면 이 안의 텍스트 수치들이 0.1초 만에 갱신된다구! 눈으로 레시피 값을 직접 체크해 봐! 🔧",
                     owl: "부엉! 튜너에 실시간 적용 중인 visualizer 스펙 파라미터들이 JSON 구조 객체로 즉시 반영 투사되는 실시간 가상 터미널 보드다 부엉. 🛡️"
+                },
+                'badge-intella-radar': {
+                    girl: "대표님! 리서치 팀장 인텔라 언니의 '역분석 크롬 레이더망'이 우리 대시보드와 초고속 API 파이프라인으로 연결되어 활성화되었다는 표시랍니다...! 🌸",
+                    boy: "대표님! 외부 리서치 요원 인텔라(Intella)의 실시간 주파수 역공학 데이터 피드가 본 튜너 엔진에 정상 동기화 결합되어 작동 중임을 나타냅니다! ⚡",
+                    cat: "야옹! 인텔라 녀석의 첩보 레이더가 아주 싱싱하게 켜져 있다는 표시등이다옹! 🐾 캡처 레이더 신호 대기 완료다냥!",
+                    squirrel: "도토리 정찰병 인텔라의 무전기가 이 튜닝실과 빵빵하게 수신 연결되었다는 배지라구! 🐿️ 맘 편히 타사 영상 주파수를 털어와봐!",
+                    owl: "부엉! 외부 비주얼 파동 첩보를 입수하는 정보 담당 요원 인텔라의 역분석 세션 소켓이 정상 Link-up 결합되었음을 상징하는 하트비트 시그널이다 부엉. 🛡️"
                 }
             };
 
@@ -4047,8 +4054,8 @@
                 const interactiveSelector = 'button, select, input[type="range"], #recipe-drop-zone';
                 document.querySelectorAll(interactiveSelector).forEach(el => {
                     if (el.hasAttribute('data-tink-tip')) return;
-                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드, 카피 JSON 및 사양서 패널 요소들은 개별 호버 상세 멘트가 지정되었으므로 공통 순회에서 제외
-                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy' || el.id === 'json-display' || el.id === 'json-title-export') return;
+                    // 📡 [한글 주석] 역분석 제어 단추 3종, 배경 업로드, 카피 JSON 및 사양서 패널/배지 요소들은 개별 호버 상세 멘트가 지정되었으므로 공통 순회에서 제외
+                    if (el.id === 'btn-save-render-reverse' || el.id === 'btn-register-template-reverse' || el.id === 'btn-launch-analyzer' || el.id === 'label-bg-image-upload' || el.id === 'btn-copy' || el.id === 'json-display' || el.id === 'json-title-export' || el.id === 'badge-intella-radar') return;
 
                     el.addEventListener('mouseenter', () => {
                         if (!isTinkerbellActive) return;
